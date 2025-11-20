@@ -1,0 +1,426 @@
+<div class="dashboard">
+    <div class="sidebar">
+        <!-- سيتم تحميله من components/sidebar-owner.html -->
+    </div>
+    <div class="main-content">
+        <div class="dashboard-header">
+            <h1 class="page-title" id="owner-page-title">نظرة عامة</h1>
+            <div class="user-menu">
+                <div class="notification-bell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">5</span>
+                    <div class="notifications-panel" id="notifications-panel">
+                        <!-- سيتم تعبئته ديناميكياً -->
+                    </div>
+                </div>
+                <div class="user-info">
+                    <span id="user-name">مالك العقار</span>
+                    <i class="fas fa-user-circle" style="margin-right: 5px; font-size: 1.5rem;"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- نظرة عامة -->
+        <div id="owner-overview" class="tab-content active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" data-stat="properties">8</div>
+                    <div class="stat-label">العقارات</div>
+                </div>
+                <div class="stat-card success">
+                    <div class="stat-value" data-stat="occupancyRate">92%</div>
+                    <div class="stat-label">معدل الإشغال</div>
+                </div>
+                <div class="stat-card warning">
+                    <div class="stat-value" data-stat="monthlyIncome">45,200 ر.س</div>
+                    <div class="stat-label">الإيراد الشهري</div>
+                </div>
+                <div class="stat-card danger">
+                    <div class="stat-value" data-stat="newMaintenance">3</div>
+                    <div class="stat-label">طلبات صيانة جديدة</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">العقارات الأخيرة</h3>
+                    <button class="btn btn-primary" onclick="ownerDashboard.showAddPropertyModal()">عقار جديد</button>
+                </div>
+                <div class="card-body">
+                    <table class="table" id="properties-table">
+                        <thead>
+                            <tr>
+                                <th>اسم العقار</th>
+                                <th>المكان</th>
+                                <th>الوحدات</th>
+                                <th>الإشغال</th>
+                                <th>الحالة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- سيتم تعبئته ديناميكياً -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">طلبات الصيانة الأخيرة</h3>
+                    <button class="btn btn-primary" onclick="dashboard.switchTab('owner', 'maintenance')">عرض الكل</button>
+                </div>
+                <div class="card-body">
+                    <table class="table" id="maintenance-requests-table">
+                        <thead>
+                            <tr>
+                                <th>رقم الطلب</th>
+                                <th>العقار</th>
+                                <th>نوع الصيانة</th>
+                                <th>تاريخ الطلب</th>
+                                <th>الحالة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- سيتم تعبئته ديناميكياً -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- عقاراتي -->
+        <div id="owner-properties" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">إدارة العقارات</h3>
+                    <button class="btn btn-primary" onclick="ownerDashboard.showAddPropertyModal()">إضافة عقار</button>
+                </div>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="form-col">
+                            <input type="text" class="form-control" placeholder="بحث في العقارات...">
+                        </div>
+                        <div class="form-col">
+                            <select class="form-control">
+                                <option value="">جميع الأنواع</option>
+                                <option value="villa">فيلا</option>
+                                <option value="apartment">شقة</option>
+                                <option value="building">عمارة</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>صورة</th>
+                                <th>اسم العقار</th>
+                                <th>المكان</th>
+                                <th>الوحدات</th>
+                                <th>الإشغال</th>
+                                <th>الإيجار الشهري</th>
+                                <th>الحالة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><div class="property-image">🏠</div></td>
+                                <td>عمارة الربيع</td>
+                                <td>حي الربيع، الرياض</td>
+                                <td>12</td>
+                                <td>10/12</td>
+                                <td>120,000 ر.س</td>
+                                <td><span class="status-badge status-active">نشط</span></td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm">عرض</button>
+                                    <button class="btn btn-primary btn-sm">تعديل</button>
+                                    <button class="btn btn-danger btn-sm">حذف</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- العقود -->
+        <div id="owner-contracts" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">عقود الإيجار</h3>
+                    <button class="btn btn-primary" onclick="ownerDashboard.showNewContractModal()">عقد جديد</button>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>رقم العقد</th>
+                                <th>العقار</th>
+                                <th>المستأجر</th>
+                                <th>تاريخ البدء</th>
+                                <th>تاريخ الانتهاء</th>
+                                <th>الإيجار</th>
+                                <th>الحالة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>CNT-0042</td>
+                                <td>عمارة الربيع - الوحدة 101</td>
+                                <td>أحمد محمد</td>
+                                <td>01/06/2023</td>
+                                <td>31/05/2024</td>
+                                <td>2,400 ر.س</td>
+                                <td><span class="status-badge status-active">نشط</span></td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm">عرض</button>
+                                    <button class="btn btn-warning btn-sm">تعديل</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- المدفوعات -->
+        <div id="owner-payments" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">الإيرادات والمدفوعات</h3>
+                </div>
+                <div class="card-body">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value">45,200 ر.س</div>
+                            <div class="stat-label">الإيراد الشهري</div>
+                        </div>
+                        <div class="stat-card success">
+                            <div class="stat-value">42,800 ر.س</div>
+                            <div class="stat-label">المتحصل</div>
+                        </div>
+                        <div class="stat-card warning">
+                            <div class="stat-value">2,400 ر.س</div>
+                            <div class="stat-label">المتأخر</div>
+                        </div>
+                        <div class="stat-card danger">
+                            <div class="stat-value">94.7%</div>
+                            <div class="stat-label">نسبة التحصيل</div>
+                        </div>
+                    </div>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>رقم الفاتورة</th>
+                                <th>العقار</th>
+                                <th>المستأجر</th>
+                                <th>المبلغ</th>
+                                <th>تاريخ الاستحقاق</th>
+                                <th>الحالة</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>INV-0045</td>
+                                <td>عمارة الربيع - 101</td>
+                                <td>أحمد محمد</td>
+                                <td>2,400 ر.س</td>
+                                <td>05/12/2023</td>
+                                <td><span class="status-badge status-pending">بانتظار الدفع</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- طلبات الصيانة -->
+        <div id="owner-maintenance" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">طلبات الصيانة</h3>
+                </div>
+                <div class="card-body">
+                    <div class="tabs">
+                        <div class="tab active" onclick="ownerDashboard.filterMaintenance('all')">الكل</div>
+                        <div class="tab" onclick="ownerDashboard.filterMaintenance('pending')">قيد المراجعة</div>
+                        <div class="tab" onclick="ownerDashboard.filterMaintenance('in_progress')">قيد التنفيذ</div>
+                        <div class="tab" onclick="ownerDashboard.filterMaintenance('completed')">مكتمل</div>
+                    </div>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>رقم الطلب</th>
+                                <th>العقار</th>
+                                <th>نوع الصيانة</th>
+                                <th>الأولوية</th>
+                                <th>تاريخ الطلب</th>
+                                <th>الحالة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#MT-0015</td>
+                                <td>عمارة الربيع</td>
+                                <td>سباكة</td>
+                                <td><span class="status-badge status-danger">عاجل</span></td>
+                                <td>20/11/2023</td>
+                                <td><span class="status-badge status-pending">قيد المراجعة</span></td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm">عرض</button>
+                                    <button class="btn btn-success btn-sm">قبول</button>
+                                    <button class="btn btn-danger btn-sm">رفض</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- التقارير -->
+        <div id="owner-reports" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">التقارير والإحصائيات</h3>
+                    <button class="btn btn-primary">تصدير التقرير</button>
+                </div>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="form-col">
+                            <label>الفترة</label>
+                            <select class="form-control">
+                                <option value="month">هذا الشهر</option>
+                                <option value="quarter">هذا الربع</option>
+                                <option value="year">هذه السنة</option>
+                                <option value="custom">مخصص</option>
+                            </select>
+                        </div>
+                        <div class="form-col">
+                            <label>نوع التقرير</label>
+                            <select class="form-control">
+                                <option value="financial">مالي</option>
+                                <option value="occupancy">الإشغال</option>
+                                <option value="maintenance">الصيانة</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="report-charts">
+                        <div style="height: 300px; background: #f8f9fa; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin: 20px 0;">
+                            <p style="color: #6c757d;">رسم بياني للإيرادات سيظهر هنا</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- الإشعارات -->
+        <div id="owner-notifications" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">الإشعارات</h3>
+                    <button class="btn btn-outline">تعيين الكل كمقروء</button>
+                </div>
+                <div class="card-body">
+                    <div class="notifications-list">
+                        <div class="notification-item unread">
+                            <div class="notification-title">طلب صيانة جديد</div>
+                            <div class="notification-desc">طلب صيانة سباكة في عمارة الربيع</div>
+                            <div class="notification-time">منذ ساعة</div>
+                        </div>
+                        <div class="notification-item unread">
+                            <div class="notification-title">دفع إيجار</div>
+                            <div class="notification-desc">تم دفع إيجار الشقة 102 في فيلا النخيل</div>
+                            <div class="notification-time">منذ 3 ساعات</div>
+                        </div>
+                        <div class="notification-item">
+                            <div class="notification-title">عقد منتهي</div>
+                            <div class="notification-desc">عقد الوحدة 203 في مجمع الضيافة سينتهي بعد 30 يوم</div>
+                            <div class="notification-time">منذ يومين</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- مودال إضافة عقار -->
+<div id="add-property-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">إضافة عقار جديد</h3>
+            <button class="modal-close" onclick="app.closeModal('add-property-modal')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="add-property-form">
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="property-name">اسم العقار</label>
+                            <input type="text" id="property-name" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="property-type">نوع العقار</label>
+                            <select id="property-type" class="form-control" required>
+                                <option value="">اختر النوع</option>
+                                <option value="villa">فيلا</option>
+                                <option value="apartment">شقة</option>
+                                <option value="building">عمارة</option>
+                                <option value="compound">مجمع سكني</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="property-address">العنوان</label>
+                            <input type="text" id="property-address" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="property-city">المدينة</label>
+                            <select id="property-city" class="form-control" required>
+                                <option value="">اختر المدينة</option>
+                                <option value="riyadh">الرياض</option>
+                                <option value="jeddah">جدة</option>
+                                <option value="dammam">الدمام</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="property-units">عدد الوحدات</label>
+                            <input type="number" id="property-units" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="property-rent">متوسط الإيجار الشهري</label>
+                            <input type="number" id="property-rent" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="property-description">وصف العقار</label>
+                    <textarea id="property-description" class="form-control" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">إضافة العقار</button>
+            </form>
+        </div>
+    </div>
+</div>

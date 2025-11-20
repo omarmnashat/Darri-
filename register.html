@@ -1,0 +1,78 @@
+<div class="auth-container">
+    <div class="auth-card">
+        <h2>إنشاء حساب جديد</h2>
+        <form id="register-form">
+            <div class="form-group">
+                <label>اختر دورك</label>
+                <div class="role-selector">
+                    <div class="role-option" data-role="tenant">
+                        <i class="fas fa-user-tie"></i>
+                        <div>مستأجر</div>
+                    </div>
+                    <div class="role-option" data-role="owner">
+                        <i class="fas fa-home"></i>
+                        <div>مالك عقار</div>
+                    </div>
+                    <div class="role-option" data-role="payment">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <div>مسؤول الدفع</div>
+                    </div>
+                    <div class="role-option" data-role="maintenance">
+                        <i class="fas fa-tools"></i>
+                        <div>فريق الصيانة</div>
+                    </div>
+                </div>
+                <input type="hidden" id="register-role" required>
+            </div>
+            <div class="form-row">
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="register-name">الاسم الكامل</label>
+                        <input type="text" id="register-name" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="register-email">البريد الإلكتروني</label>
+                        <input type="email" id="register-email" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="register-phone">رقم الهاتف</label>
+                        <input type="tel" id="register-phone" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="register-id">رقم الهوية</label>
+                        <input type="text" id="register-id" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="register-password">كلمة المرور</label>
+                        <input type="password" id="register-password" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="register-confirm-password">تأكيد كلمة المرور</label>
+                        <input type="password" id="register-confirm-password" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">إنشاء الحساب</button>
+        </form>
+        <p style="text-align: center; margin-top: 20px;">
+            لديك حساب بالفعل؟ <a href="#" onclick="app.loadPage('login')">تسجيل الدخول</a>
+        </p>
+        <p style="text-align: center; margin-top: 10px;">
+            <a href="#" onclick="app.loadPage('landing')">العودة للرئيسية</a>
+        </p>
+    </div>
+</div>

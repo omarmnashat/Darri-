@@ -1,0 +1,299 @@
+<div class="dashboard">
+    <div class="sidebar">
+        <!-- سيتم تحميله من components/sidebar-payment.html -->
+    </div>
+    <div class="main-content">
+        <div class="dashboard-header">
+            <h1 class="page-title" id="payment-page-title">نظرة عامة</h1>
+            <div class="user-menu">
+                <div class="notification-bell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">2</span>
+                    <div class="notifications-panel" id="notifications-panel">
+                        <!-- سيتم تعبئته ديناميكياً -->
+                    </div>
+                </div>
+                <div class="user-info">
+                    <span id="user-name">مسؤول الدفع</span>
+                    <i class="fas fa-user-circle" style="margin-right: 5px; font-size: 1.5rem;"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- نظرة عامة -->
+        <div id="payment-overview" class="tab-content active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" data-stat="monthlyInvoices">32</div>
+                    <div class="stat-label">فواتير هذا الشهر</div>
+                </div>
+                <div class="stat-card success">
+                    <div class="stat-value" data-stat="totalPayments">28,500 ر.س</div>
+                    <div class="stat-label">إجمالي المدفوعات</div>
+                </div>
+                <div class="stat-card warning">
+                    <div class="stat-value" data-stat="latePayments">4</div>
+                    <div class="stat-label">مدفوعات متأخرة</div>
+                </div>
+                <div class="stat-card danger">
+                    <div class="stat-value" data-stat="collectionRate">89%</div>
+                    <div class="stat-label">نسبة التحصيل</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">الفواتير الأخيرة</h3>
+                    <button class="btn btn-primary" onclick="paymentDashboard.showCreateInvoiceModal()">فاتورة جديدة</button>
+                </div>
+                <div class="card-body">
+                    <table class="table" id="invoices-table">
+                        <thead>
+                            <tr>
+                                <th>رقم الفاتورة</th>
+                                <th>المستأجر</th>
+                                <th>المبلغ</th>
+                                <th>تاريخ الاستحقاق</th>
+                                <th>الحالة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- سيتم تعبئته ديناميكياً -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">آخر المدفوعات</h3>
+                    <button class="btn btn-primary" onclick="dashboard.switchTab('payment', 'payments')">عرض الكل</button>
+                </div>
+                <div class="card-body">
+                    <table class="table" id="payments-table">
+                        <thead>
+                            <tr>
+                                <th>رقم الدفع</th>
+                                <th>رقم الفاتورة</th>
+                                <th>المستأجر</th>
+                                <th>المبلغ</th>
+                                <th>التاريخ</th>
+                                <th>طريقة الدفع</th>
+                                <th>الحالة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- سيتم تعبئته ديناميكياً -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- الفواتير -->
+        <div id="payment-invoices" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">إدارة الفواتير</h3>
+                    <button class="btn btn-primary" onclick="paymentDashboard.showCreateInvoiceModal()">إنشاء فاتورة</button>
+                </div>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="form-col">
+                            <input type="text" class="form-control" placeholder="بحث في الفواتير...">
+                        </div>
+                        <div class="form-col">
+                            <select class="form-control">
+                                <option value="">جميع الحالات</option>
+                                <option value="pending">بانتظار الدفع</option>
+                                <option value="paid">مدفوع</option>
+                                <option value="overdue">متأخر</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>رقم الفاتورة</th>
+                                <th>المستأجر</th>
+                                <th>العقار</th>
+                                <th>المبلغ</th>
+                                <th>تاريخ الإصدار</th>
+                                <th>تاريخ الاستحقاق</th>
+                                <th>الحالة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>INV-0045</td>
+                                <td>أحمد محمد</td>
+                                <td>عمارة الربيع - الوحدة 101</td>
+                                <td>2,400 ر.س</td>
+                                <td>01/11/2023</td>
+                                <td>05/12/2023</td>
+                                <td><span class="status-badge status-pending">بانتظار الدفع</span></td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm">عرض</button>
+                                    <button class="btn btn-primary btn-sm">إشعار</button>
+                                    <button class="btn btn-warning btn-sm">تعديل</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- المدفوعات -->
+        <div id="payment-payments" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">سجل المدفوعات</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="form-col">
+                            <input type="text" class="form-control" placeholder="بحث في المدفوعات...">
+                        </div>
+                        <div class="form-col">
+                            <select class="form-control">
+                                <option value="">جميع الحالات</option>
+                                <option value="pending">قيد المعالجة</option>
+                                <option value="confirmed">مؤكد</option>
+                                <option value="failed">فاشل</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>رقم الدفع</th>
+                                <th>رقم الفاتورة</th>
+                                <th>المستأجر</th>
+                                <th>المبلغ</th>
+                                <th>تاريخ الدفع</th>
+                                <th>طريقة الدفع</th>
+                                <th>الحالة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>PAY-0078</td>
+                                <td>INV-0044</td>
+                                <td>سعيد عبدالله</td>
+                                <td>3,200 ر.س</td>
+                                <td>28/11/2023</td>
+                                <td>تحويل بنكي</td>
+                                <td><span class="status-badge status-active">مؤكد</span></td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm">تفاصيل</button>
+                                    <button class="btn btn-primary btn-sm">إيصال</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- التقارير -->
+        <div id="payment-reports" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">التقارير المالية</h3>
+                    <button class="btn btn-primary">تصدير التقرير</button>
+                </div>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="form-col">
+                            <label>الفترة</label>
+                            <select class="form-control">
+                                <option value="month">هذا الشهر</option>
+                                <option value="quarter">هذا الربع</option>
+                                <option value="year">هذه السنة</option>
+                            </select>
+                        </div>
+                        <div class="form-col">
+                            <label>نوع التقرير</label>
+                            <select class="form-control">
+                                <option value="revenue">الإيرادات</option>
+                                <option value="collection">التحصيل</option>
+                                <option value="outstanding">المستحقات</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid" style="margin-top: 20px;">
+                        <div class="stat-card">
+                            <div class="stat-value">156,800 ر.س</div>
+                            <div class="stat-label">إجمالي الإيرادات</div>
+                        </div>
+                        <div class="stat-card success">
+                            <div class="stat-value">148,200 ر.س</div>
+                            <div class="stat-label">المتحصل</div>
+                        </div>
+                        <div class="stat-card warning">
+                            <div class="stat-value">8,600 ر.س</div>
+                            <div class="stat-label">المستحق</div>
+                        </div>
+                        <div class="stat-card danger">
+                            <div class="stat-value">94.5%</div>
+                            <div class="stat-label">نسبة التحصيل</div>
+                        </div>
+                    </div>
+
+                    <div style="height: 300px; background: #f8f9fa; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin: 20px 0;">
+                        <p style="color: #6c757d;">رسم بياني للإيرادات سيظهر هنا</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- مودال إنشاء فاتورة -->
+<div id="create-invoice-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">إنشاء فاتورة جديدة</h3>
+            <button class="modal-close" onclick="app.closeModal('create-invoice-modal')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="create-invoice-form">
+                <div class="form-group">
+                    <label for="invoice-contract">اختر العقد</label>
+                    <select id="invoice-contract" class="form-control" required>
+                        <option value="">اختر العقد</option>
+                        <option value="1">عمارة الربيع - أحمد محمد - 2,400 ر.س</option>
+                        <option value="2">فيلا النخيل - سعيد عبدالله - 3,200 ر.س</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="invoice-amount">المبلغ</label>
+                            <input type="number" id="invoice-amount" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="invoice-due-date">تاريخ الاستحقاق</label>
+                            <input type="date" id="invoice-due-date" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="invoice-description">وصف الفاتورة</label>
+                    <textarea id="invoice-description" class="form-control" rows="3" placeholder="وصف الفاتورة...">فاتورة إيجار شهر نوفمبر 2023</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">إنشاء الفاتورة</button>
+            </form>
+        </div>
+    </div>
+</div>

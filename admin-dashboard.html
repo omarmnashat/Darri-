@@ -1,0 +1,441 @@
+<div class="dashboard">
+    <div class="sidebar">
+        <!-- سيتم تحميله من components/sidebar-admin.html -->
+    </div>
+    <div class="main-content">
+        <div class="dashboard-header">
+            <h1 class="page-title" id="admin-page-title">نظرة عامة</h1>
+            <div class="user-menu">
+                <div class="notification-bell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                    <div class="notifications-panel" id="notifications-panel">
+                        <!-- سيتم تعبئته ديناميكياً -->
+                    </div>
+                </div>
+                <div class="user-info">
+                    <span id="user-name">المشرف العام</span>
+                    <i class="fas fa-user-circle" style="margin-right: 5px; font-size: 1.5rem;"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- نظرة عامة -->
+        <div id="admin-overview" class="tab-content active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" data-stat="totalUsers">156</div>
+                    <div class="stat-label">إجمالي المستخدمين</div>
+                </div>
+                <div class="stat-card success">
+                    <div class="stat-value" data-stat="activeProperties">42</div>
+                    <div class="stat-label">عقار نشط</div>
+                </div>
+                <div class="stat-card warning">
+                    <div class="stat-value" data-stat="systemPerformance">98.7%</div>
+                    <div class="stat-label">أداء النظام</div>
+                </div>
+                <div class="stat-card danger">
+                    <div class="stat-value" data-stat="systemNotifications">7</div>
+                    <div class="stat-label">إشعارات النظام</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">آخر المستخدمين المسجلين</h3>
+                    <button class="btn btn-primary" onclick="dashboard.switchTab('admin', 'users')">عرض الكل</button>
+                </div>
+                <div class="card-body">
+                    <table class="table" id="users-table">
+                        <thead>
+                            <tr>
+                                <th>الاسم</th>
+                                <th>البريد الإلكتروني</th>
+                                <th>الدور</th>
+                                <th>تاريخ التسجيل</th>
+                                <th>الحالة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- سيتم تعبئته ديناميكياً -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">نشاط النظام</h3>
+                <button class="btn btn-outline">عرض السجلات</button>
+                </div>
+                <div class="card-body">
+                    <div id="system-info">
+                        <!-- سيتم تعبئته ديناميكياً -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- إدارة المستخدمين -->
+        <div id="admin-users" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">إدارة المستخدمين</h3>
+                    <button class="btn btn-primary" onclick="adminDashboard.showAddUserModal()">إضافة مستخدم</button>
+                </div>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="form-col">
+                            <input type="text" class="form-control" placeholder="بحث في المستخدمين...">
+                        </div>
+                        <div class="form-col">
+                            <select class="form-control">
+                                <option value="">جميع الأدوار</option>
+                                <option value="tenant">مستأجر</option>
+                                <option value="owner">مالك عقار</option>
+                                <option value="payment">مسؤول الدفع</option>
+                                <option value="maintenance">فريق الصيانة</option>
+                                <option value="admin">مشرف</option>
+                            </select>
+                        </div>
+                        <div class="form-col">
+                            <select class="form-control">
+                                <option value="">جميع الحالات</option>
+                                <option value="active">نشط</option>
+                                <option value="inactive">غير نشط</option>
+                                <option value="pending">بانتظار التفعيل</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>الاسم</th>
+                                <th>البريد الإلكتروني</th>
+                                <th>رقم الهاتف</th>
+                                <th>الدور</th>
+                                <th>تاريخ التسجيل</th>
+                                <th>آخر دخول</th>
+                                <th>الحالة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>أحمد محمد</td>
+                                <td>ahmed@example.com</td>
+                                <td>0551234567</td>
+                                <td><span class="status-badge status-tenant">مستأجر</span></td>
+                                <td>15/11/2023</td>
+                                <td>25/11/2023</td>
+                                <td><span class="status-badge status-active">نشط</span></td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm">عرض</button>
+                                    <button class="btn btn-primary btn-sm">تعديل</button>
+                                    <button class="btn btn-warning btn-sm">تعطيل</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- إدارة العقارات -->
+        <div id="admin-properties" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">إدارة العقارات</h3>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>اسم العقار</th>
+                                <th>المالك</th>
+                                <th>المدينة</th>
+                                <th>نوع العقار</th>
+                                <th>الوحدات</th>
+                                <th>تاريخ الإضافة</th>
+                                <th>الحالة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>عمارة الربيع</td>
+                                <td>سعيد عبدالله</td>
+                                <td>الرياض</td>
+                                <td>عمارة</td>
+                                <td>12</td>
+                                <td>01/10/2023</td>
+                                <td><span class="status-badge status-active">نشط</span></td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm">عرض</button>
+                                    <button class="btn btn-warning btn-sm">تعديل</button>
+                                    <button class="btn btn-danger btn-sm">حذف</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- إدارة العقود -->
+        <div id="admin-contracts" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">إدارة العقود</h3>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>رقم العقد</th>
+                                <th>العقار</th>
+                                <th>المستأجر</th>
+                                <th>المالك</th>
+                                <th>تاريخ البدء</th>
+                                <th>تاريخ الانتهاء</th>
+                                <th>الحالة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>CNT-0042</td>
+                                <td>عمارة الربيع - 101</td>
+                                <td>أحمد محمد</td>
+                                <td>سعيد عبدالله</td>
+                                <td>01/06/2023</td>
+                                <td>31/05/2024</td>
+                                <td><span class="status-badge status-active">نشط</span></td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm">عرض</button>
+                                    <button class="btn btn-warning btn-sm">تعديل</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- التقارير -->
+        <div id="admin-reports" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">تقارير النظام</h3>
+                    <button class="btn btn-primary">تصدير جميع التقارير</button>
+                </div>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="form-col">
+                            <label>نوع التقرير</label>
+                            <select class="form-control">
+                                <option value="users">المستخدمين</option>
+                                <option value="properties">العقارات</option>
+                                <option value="financial">مالي</option>
+                                <option value="maintenance">الصيانة</option>
+                                <option value="system">النظام</option>
+                            </select>
+                        </div>
+                        <div class="form-col">
+                            <label>الفترة</label>
+                            <select class="form-control">
+                                <option value="month">هذا الشهر</option>
+                                <option value="quarter">هذا الربع</option>
+                                <option value="year">هذه السنة</option>
+                                <option value="all">الكامل</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid" style="margin-top: 20px;">
+                        <div class="stat-card">
+                            <div class="stat-value">156</div>
+                            <div class="stat-label">المستخدمين</div>
+                        </div>
+                        <div class="stat-card success">
+                            <div class="stat-value">42</div>
+                            <div class="stat-label">العقارات</div>
+                        </div>
+                        <div class="stat-card warning">
+                            <div class="stat-value">89</div>
+                            <div class="stat-label">العقود النشطة</div>
+                        </div>
+                        <div class="stat-card danger">
+                            <div class="stat-value">1.2M ر.س</div>
+                            <div class="stat-label">إجمالي الإيرادات</div>
+                        </div>
+                    </div>
+
+                    <div style="height: 300px; background: #f8f9fa; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin: 20px 0;">
+                        <p style="color: #6c757d;">الرسوم البيانية والتقارير التفصيلية ستظهر هنا</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- إعدادات النظام -->
+        <div id="admin-system" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">إعدادات النظام</h3>
+                    <button class="btn btn-primary">حفظ الإعدادات</button>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label>اسم النظام</label>
+                        <input type="text" class="form-control" value="Darri - نظام إدارة العقارات">
+                    </div>
+                    <div class="form-group">
+                        <label>وصف النظام</label>
+                        <textarea class="form-control" rows="3">منصة متكاملة لإدارة العقارات تربط بين المستأجرين ومالكي العقارات ومسؤولي الدفع وفرق الصيانة</textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label>العملة الافتراضية</label>
+                                <select class="form-control">
+                                    <option value="SAR">ريال سعودي (ر.س)</option>
+                                    <option value="USD">دولار أمريكي ($)</option>
+                                    <option value="EUR">يورو (€)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label>اللغة الافتراضية</label>
+                                <select class="form-control">
+                                    <option value="ar">العربية</option>
+                                    <option value="en">English</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>إعدادات البريد الإلكتروني</label>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="email-notifications" checked>
+                            <label class="form-check-label" for="email-notifications">تفعيل الإشعارات البريدية</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="sms-notifications">
+                            <label class="form-check-label" for="sms-notifications">تفعيل الإشعارات النصية</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>إعدادات الأمان</label>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="two-factor" checked>
+                            <label class="form-check-label" for="two-factor">المصادقة الثنائية للمشرفين</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="session-timeout">
+                            <label class="form-check-label" for="session-timeout">إنهاء الجلسة تلقائياً بعد 30 دقيقة</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">صيانة النظام</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="form-col">
+                            <button class="btn btn-outline" style="width: 100%;">تنظيف الذاكرة المؤقتة</button>
+                        </div>
+                        <div class="form-col">
+                            <button class="btn btn-outline" style="width: 100%;">نسخ احتياطي للبيانات</button>
+                        </div>
+                        <div class="form-col">
+                            <button class="btn btn-outline" style="width: 100%;">تحسين قاعدة البيانات</button>
+                        </div>
+                    </div>
+                    <div class="form-row" style="margin-top: 15px;">
+                        <div class="form-col">
+                            <button class="btn btn-warning" style="width: 100%;">وضع الصيانة</button>
+                        </div>
+                        <div class="form-col">
+                            <button class="btn btn-danger" style="width: 100%;">إعادة تشغيل النظام</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- مودال إضافة مستخدم -->
+<div id="add-user-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">إضافة مستخدم جديد</h3>
+            <button class="modal-close" onclick="app.closeModal('add-user-modal')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="add-user-form">
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="user-name">الاسم الكامل</label>
+                            <input type="text" id="user-name" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="user-email">البريد الإلكتروني</label>
+                            <input type="email" id="user-email" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="user-phone">رقم الهاتف</label>
+                            <input type="tel" id="user-phone" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="user-role">الدور</label>
+                            <select id="user-role" class="form-control" required>
+                                <option value="">اختر الدور</option>
+                                <option value="tenant">مستأجر</option>
+                                <option value="owner">مالك عقار</option>
+                                <option value="payment">مسؤول الدفع</option>
+                                <option value="maintenance">فريق الصيانة</option>
+                                <option value="admin">مشرف</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="user-password">كلمة المرور</label>
+                            <input type="password" id="user-password" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="user-confirm-password">تأكيد كلمة المرور</label>
+                            <input type="password" id="user-confirm-password" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">إضافة المستخدم</button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,456 @@
+/* style.css */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
+
+body { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    background: #f8f9fa; 
+    color: #2d3748;
+    line-height: 1.6;
+}
+
+/* التنسيقات العامة */
+.app-container { 
+    min-height: 100vh; 
+    padding: 20px;
+}
+
+.main-box {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
+    border: 1px solid #e2e8f0;
+}
+
+.auth-container {
+    background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+h1 { 
+    color: #2d3748; 
+    margin-bottom: 15px; 
+    font-size: 2.5em; 
+    text-align: center;
+    font-weight: 700;
+}
+
+h2 { 
+    color: #2d3748; 
+    margin-bottom: 15px; 
+    text-align: center;
+    font-weight: 600;
+}
+
+.subtitle { 
+    color: #718096; 
+    margin-bottom: 30px; 
+    text-align: center;
+    font-size: 1.1em;
+}
+
+/* الأزرار */
+.btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-primary { 
+    background: #2b6cb0; 
+    color: white; 
+}
+.btn-primary:hover { 
+    background: #2c5282; 
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(43, 108, 176, 0.3);
+}
+
+.btn-secondary { 
+    background: #38a169; 
+    color: white; 
+}
+.btn-secondary:hover { 
+    background: #2f855a; 
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(56, 161, 105, 0.3);
+}
+
+.btn-warning { 
+    background: #d69e2e; 
+    color: white; 
+}
+.btn-warning:hover { 
+    background: #b7791f; 
+    transform: translateY(-2px);
+}
+
+.btn-danger { 
+    background: #e53e3e; 
+    color: white; 
+}
+.btn-danger:hover { 
+    background: #c53030; 
+    transform: translateY(-2px);
+}
+
+.btn-light { 
+    background: #edf2f7; 
+    color: #4a5568; 
+    border: 1px solid #e2e8f0;
+}
+.btn-light:hover { 
+    background: #e2e8f0; 
+    transform: translateY(-2px);
+}
+
+.btn-block { 
+    width: 100%; 
+    margin: 10px 0; 
+    justify-content: center; 
+}
+
+/* النماذج */
+.form-group {
+    margin: 20px 0;
+    text-align: right;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #4a5568;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    background: #f7fafc;
+}
+
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: #2b6cb0;
+    outline: none;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.1);
+}
+
+/* المميزات */
+.features {
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 12px 0;
+    color: #4a5568;
+    padding: 8px 0;
+}
+
+.feature-icon {
+    width: 40px;
+    height: 40px;
+    background: #ebf8ff;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #2b6cb0;
+    font-size: 1.2em;
+}
+
+/* الروابط */
+.auth-links {
+    margin-top: 25px;
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.auth-links a {
+    color: #2b6cb0;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.auth-links a:hover {
+    color: #2c5282;
+    text-decoration: underline;
+}
+
+/* الرسائل */
+.message {
+    padding: 12px 16px;
+    margin: 15px 0;
+    border-radius: 8px;
+    font-weight: 500;
+    text-align: center;
+    border: 1px solid transparent;
+}
+
+.message.success { 
+    background: #f0fff4; 
+    color: #276749; 
+    border-color: #9ae6b4; 
+}
+.message.error { 
+    background: #fed7d7; 
+    color: #9b2c2c; 
+    border-color: #feb2b2; 
+}
+.message.info { 
+    background: #ebf8ff; 
+    color: #2c5aa0; 
+    border-color: #90cdf4; 
+}
+
+/* تنسيقات الداشبورد */
+.dashboard-header {
+    background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+    color: white;
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.dashboard-header h1 {
+    color: white;
+    margin-bottom: 10px;
+}
+
+.dashboard-header p {
+    color: #cbd5e0;
+    font-size: 1.1em;
+}
+
+/* التنقل */
+.nav-tabs {
+    display: flex;
+    gap: 8px;
+    margin: 25px 0;
+    flex-wrap: wrap;
+    justify-content: center;
+    background: #f7fafc;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+}
+
+.nav-tab {
+    padding: 12px 20px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #4a5568;
+    font-weight: 500;
+    flex: 1;
+    min-width: 120px;
+    text-align: center;
+}
+
+.nav-tab.active {
+    background: #2b6cb0;
+    color: white;
+    border-color: #2b6cb0;
+    box-shadow: 0 2px 4px rgba(43, 108, 176, 0.2);
+}
+
+.nav-tab:hover {
+    background: #edf2f7;
+    transform: translateY(-1px);
+}
+
+.nav-tab.active:hover {
+    background: #2c5282;
+}
+
+/* المحتوى */
+.content-section {
+    display: none;
+    padding: 25px;
+    background: white;
+    border-radius: 10px;
+    margin: 15px 0;
+    border: 1px solid #e2e8f0;
+}
+
+.content-section.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* الكروت */
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    margin: 20px 0;
+    border-left: 4px solid #2b6cb0;
+    border: 1px solid #e2e8f0;
+}
+
+.card h3 {
+    color: #2d3748;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+/* الإحصائيات */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.stat-card {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    text-align: center;
+    border-top: 4px solid #2b6cb0;
+    border: 1px solid #e2e8f0;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.stat-number {
+    font-size: 2.2em;
+    font-weight: bold;
+    color: #2d3748;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    color: #718096;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* الجداول */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.table th, .table td {
+    padding: 15px;
+    text-align: right;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.table th {
+    background: #f7fafc;
+    color: #4a5568;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.table tr:hover {
+    background: #f7fafc;
+}
+
+/* الحالات */
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.status-paid { 
+    background: #c6f6d5; 
+    color: #276749; 
+}
+.status-pending { 
+    background: #fefcbf; 
+    color: #744210; 
+}
+.status-overdue { 
+    background: #fed7d7; 
+    color: #9b2c2c; 
+}
+
+/* ألوان خاصة بدشبورد المالك */
+.owner-dashboard .dashboard-header {
+    background: linear-gradient(135deg, #2c5282 0%, #2b6cb0 100%);
+}
+
+.owner-dashboard .stat-card {
+    border-top-color: #2c5282;
+}
+
+/* ألوان خاصة بدشبورد المستأجر */
+.tenant-dashboard .dashboard-header {
+    background: linear-gradient(135deg, #2d7a5c 0%, #38a169 100%);
+}
+
+.tenant-dashboard .stat-card {
+    border-top-color: #38a169;
+}
+
+/* تأثيرات إضافية */
+.property-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 15px 0;
+    transition: all 0.3s ease;
+}
+
+.property-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-color: #2b6cb0;
+}

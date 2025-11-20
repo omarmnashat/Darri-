@@ -1,0 +1,341 @@
+<div class="dashboard">
+    <div class="sidebar">
+        <!-- سيتم تحميله من components/sidebar-maintenance.html -->
+    </div>
+    <div class="main-content">
+        <div class="dashboard-header">
+            <h1 class="page-title" id="maintenance-page-title">نظرة عامة</h1>
+            <div class="user-menu">
+                <div class="notification-bell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">7</span>
+                    <div class="notifications-panel" id="notifications-panel">
+                        <!-- سيتم تعبئته ديناميكياً -->
+                    </div>
+                </div>
+                <div class="user-info">
+                    <span id="user-name">فريق الصيانة</span>
+                    <i class="fas fa-user-circle" style="margin-right: 5px; font-size: 1.5rem;"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- نظرة عامة -->
+        <div id="maintenance-overview" class="tab-content active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" data-stat="activeRequests">12</div>
+                    <div class="stat-label">طلبات الصيانة النشطة</div>
+                </div>
+                <div class="stat-card success">
+                    <div class="stat-value" data-stat="weeklyCompleted">5</div>
+                    <div class="stat-label">مكتملة هذا الأسبوع</div>
+                </div>
+                <div class="stat-card warning">
+                    <div class="stat-value" data-stat="urgentRequests">2</div>
+                    <div class="stat-label">طلبات عاجلة</div>
+                </div>
+                <div class="stat-card danger">
+                    <div class="stat-value" data-stat="availableTechnicians">4</div>
+                    <div class="stat-label">فنيين متاحين</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">طلبات الصيانة الجديدة</h3>
+                    <button class="btn btn-primary" onclick="dashboard.switchTab('maintenance', 'requests')">عرض الكل</button>
+                </div>
+                <div class="card-body">
+                    <table class="table" id="maintenance-requests-table">
+                        <thead>
+                            <tr>
+                                <th>رقم الطلب</th>
+                                <th>العقار</th>
+                                <th>نوع الصيانة</th>
+                                <th>الأولوية</th>
+                                <th>تاريخ الطلب</th>
+                                <th>الحالة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- سيتم تعبئته ديناميكياً -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">الفنيين المتاحين</h3>
+                    <button class="btn btn-primary" onclick="dashboard.switchTab('maintenance', 'technicians')">إدارة الفنيين</button>
+                </div>
+                <div class="card-body">
+                    <table class="table" id="technicians-table">
+                        <thead>
+                            <tr>
+                                <th>اسم الفني</th>
+                                <th>التخصص</th>
+                                <th>الحالة</th>
+                                <th>المهام الحالية</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- سيتم تعبئته ديناميكياً -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- طلبات الصيانة -->
+        <div id="maintenance-requests" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">جميع طلبات الصيانة</h3>
+                </div>
+                <div class="card-body">
+                    <div class="tabs">
+                        <div class="tab active" onclick="maintenanceDashboard.filterRequests('all')">الكل</div>
+                        <div class="tab" onclick="maintenanceDashboard.filterRequests('pending')">بانتظار التعيين</div>
+                        <div class="tab" onclick="maintenanceDashboard.filterRequests('in_progress')">قيد التنفيذ</div>
+                        <div class="tab" onclick="maintenanceDashboard.filterRequests('completed')">مكتمل</div>
+                        <div class="tab" onclick="maintenanceDashboard.filterRequests('urgent')">عاجل</div>
+                    </div>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>رقم الطلب</th>
+                                <th>العقار</th>
+                                <th>الوحدة</th>
+                                <th>نوع الصيانة</th>
+                                <th>الأولوية</th>
+                                <th>تاريخ الطلب</th>
+                                <th>الحالة</th>
+                                <th>الفني</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#MT-0015</td>
+                                <td>عمارة الربيع</td>
+                                <td>الوحدة 101</td>
+                                <td>سباكة</td>
+                                <td><span class="status-badge status-danger">عاجل</span></td>
+                                <td>20/11/2023</td>
+                                <td><span class="status-badge status-pending">بانتظار التعيين</span></td>
+                                <td>-</td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm">عرض</button>
+                                    <button class="btn btn-primary btn-sm">تعيين</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- الجدول الزمني -->
+        <div id="maintenance-schedule" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">الجدول الزمني للصيانة</h3>
+                    <button class="btn btn-primary">إضافة مهمة</button>
+                </div>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="form-col">
+                            <label>الفترة</label>
+                            <select class="form-control">
+                                <option value="week">هذا الأسبوع</option>
+                                <option value="month">هذا الشهر</option>
+                                <option value="today">اليوم</option>
+                            </select>
+                        </div>
+                        <div class="form-col">
+                            <label>الفني</label>
+                            <select class="form-control">
+                                <option value="">جميع الفنيين</option>
+                                <option value="1">محمد أحمد</option>
+                                <option value="2">خالد إبراهيم</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>رقم المهمة</th>
+                                <th>الفني</th>
+                                <th>العقار</th>
+                                <th>نوع العمل</th>
+                                <th>التاريخ</th>
+                                <th>الوقت</th>
+                                <th>المدة</th>
+                                <th>الحالة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#SCH-0042</td>
+                                <td>محمد أحمد</td>
+                                <td>فيلا النخيل</td>
+                                <td>تصليح كهرباء</td>
+                                <td>25/11/2023</td>
+                                <td>10:00 ص</td>
+                                <td>2 ساعة</td>
+                                <td><span class="status-badge status-active">مجدولة</span></td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm">عرض</button>
+                                    <button class="btn btn-warning btn-sm">تعديل</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- الفنيين -->
+        <div id="maintenance-technicians" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">إدارة الفنيين</h3>
+                    <button class="btn btn-primary" onclick="maintenanceDashboard.showAddTechnicianModal()">إضافة فني</button>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>اسم الفني</th>
+                                <th>رقم الهاتف</th>
+                                <th>التخصص</th>
+                                <th>البريد الإلكتروني</th>
+                                <th>الحالة</th>
+                                <th>المهام النشطة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>محمد أحمد</td>
+                                <td>0551234567</td>
+                                <td>كهرباء وسباكة</td>
+                                <td>mohamed@darri.com</td>
+                                <td><span class="status-badge status-active">نشط</span></td>
+                                <td>2</td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm">عرض</button>
+                                    <button class="btn btn-primary btn-sm">تعديل</button>
+                                    <button class="btn btn-danger btn-sm">تعطيل</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- مودال تعيين فني -->
+<div id="assign-technician-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">تعيين فني للصيانة</h3>
+            <button class="modal-close" onclick="app.closeModal('assign-technician-modal')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="assign-technician-form">
+                <div class="form-group">
+                    <label for="technician-select">اختر الفني</label>
+                    <select id="technician-select" class="form-control" required>
+                        <option value="">اختر الفني</option>
+                        <option value="1">محمد أحمد (كهرباء وسباكة)</option>
+                        <option value="2">خالد إبراهيم (دهان وتصليحات)</option>
+                        <option value="3">سالم محمد (تكييف وتبريد)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="schedule-date">تاريخ التنفيذ</label>
+                    <input type="date" id="schedule-date" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="schedule-time">الوقت المقترح</label>
+                    <input type="time" id="schedule-time" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="estimated-duration">المدة المتوقعة</label>
+                    <select id="estimated-duration" class="form-control" required>
+                        <option value="1">1 ساعة</option>
+                        <option value="2">2 ساعة</option>
+                        <option value="3">3 ساعة</option>
+                        <option value="4">4 ساعة</option>
+                        <option value="full-day">يوم كامل</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">تعيين الفني</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- مودال إضافة فني -->
+<div id="add-technician-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">إضافة فني جديد</h3>
+            <button class="modal-close" onclick="app.closeModal('add-technician-modal')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="add-technician-form">
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="tech-name">اسم الفني</label>
+                            <input type="text" id="tech-name" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="tech-phone">رقم الهاتف</label>
+                            <input type="tel" id="tech-phone" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="tech-email">البريد الإلكتروني</label>
+                            <input type="email" id="tech-email" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="tech-specialty">التخصص</label>
+                            <select id="tech-specialty" class="form-control" required>
+                                <option value="">اختر التخصص</option>
+                                <option value="electrician">كهربائي</option>
+                                <option value="plumber">سباك</option>
+                                <option value="ac">تكييف وتبريد</option>
+                                <option value="painter">دهان</option>
+                                <option value="general">صيانة عامة</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="tech-experience">سنوات الخبرة</label>
+                    <input type="number" id="tech-experience" class="form-control" min="0" max="50">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">إضافة الفني</button>
+            </form>
+        </div>
+    </div>
+</div>

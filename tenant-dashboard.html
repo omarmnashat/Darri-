@@ -1,0 +1,136 @@
+// ملف للتواصل مع واجهة برمجة التطبيقات
+const API_BASE_URL = 'http://localhost:3000/api';
+
+class API {
+    static token = localStorage.getItem('token');
+    static user = JSON.parse(localStorage.getItem('user') || '{}');
+
+    static async request(endpoint, options = {}) {
+        const url = `${API_BASE_URL}${endpoint}`;
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            },
+            ...options
+        };
+
+        if (this.token) {
+            config.headers.Authorization = `Bearer ${this.token}`;
+        }
+
+        try {
+            const response = await fetch(url, config);
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'حدث خطأ في الخادم');
+            }
+
+            return data;
+        } catch (error) {
+            console.error('API Error:', error);
+            throw error;
+        }
+    }
+
+    // المصادقة
+    static async login(email, password, role) {
+        const data = await this.request('/login', {
+            method: 'POST',
+            body: JSON.stringify({ email, password, role })
+        });
+
+        this.token = data.token;
+        this.user = data.user;
+        
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+
+        return data;
+    }
+
+    static async register(userData) {
+        const data = await this.request('/register', {
+            method: 'POST',
+            body: JSON.stringify(userData)
+        });
+
+        this.token = data.token;
+        this.user = data.user;
+        
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+
+        return data;
+    }
+
+    static logout() {
+        this.token = null;
+        this.user = null;
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+    }
+
+    // المستخدمين
+    static async getCurrentUser() {
+        return await this.request('/user');
+    }
+
+    // العقارات
+    static async addProperty(propertyData) {
+        return await this.request('/properties', {
+            method: 'POST',
+            body: JSON.stringify(propertyData)
+        });
+    }
+
+    static async getOwnerProperties() {
+        return await this.request('/owner/properties');
+    }
+
+    // العقود
+    static async addContract(contractData) {
+        return await this.request('/contracts', {
+            method: 'POST',
+            body: JSON.stringify(contractData)
+        });
+    }
+
+    // طلبات الصيانة
+    static async addMaintenanceRequest(requestData) {
+        return await this.request('/maintenance', {
+            method: 'POST',
+            body: JSON.stringify(requestData)
+        });
+    }
+
+    static async getMaintenanceRequests() {
+        return await this.request('/maintenance');
+    }
+
+    static async updateMaintenanceStatus(requestId, status) {
+        return await this.request(`/maintenance/${requestId}`, {
+            method: 'PUT',
+            body: JSON.stringify({ status })
+        });
+    }
+
+    // الفواتير
+    static async addInvoice(invoiceData) {
+        return await this.request('/invoices', {
+            method: 'POST',
+            body: JSON.stringify(invoiceData)
+        });
+    }
+
+    // الإشعارات
+    static async getNotifications() {
+        return await this.request('/notifications');
+    }
+
+    // الإحصائيات
+    static async getStats() {
+        return await this.request('/stats');
+    }
+}
