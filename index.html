@@ -4,61 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Darri | د͡اري - نظام إدارة العقارات</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- إضافة الخطوط العربية -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
         * {
             font-family: 'Tajawal', 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-         body { 
+        
+        body { 
             font-family: 'Tajawal', 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             background: #f8f9fa; 
             color: #2d3748;
             line-height: 1.6;
             font-weight: 400;
         }
-         h1, h2, h3, h4, h5, h6 {
+        
+        h1, h2, h3, h4, h5, h6 {
             font-family: 'Cairo', 'Tajawal', sans-serif;
             font-weight: 700;
         }
-         h1 {
-            font-size: 2.5em;
-            margin-bottom: 15px;
-        }
-        
-        h2 {
-            font-size: 2em;
-            margin-bottom: 15px;
-        }
-        
-        /* الأزرار */
-        .btn {
-            font-family: 'Tajawal', 'Cairo', sans-serif;
-            font-weight: 600;
-        }
-        
-        /* النماذج */
-        .form-group input, .form-group select, .form-group textarea {
-            font-family: 'Tajawal', 'Cairo', sans-serif;
-        }
-        
-        /* الجداول */
-        .table {
-            font-family: 'Tajawal', 'Cairo', sans-serif;
-        }
-        
-        /* الرسائل */
-        .message {
-            font-family: 'Tajawal', 'Cairo', sans-serif;
-            font-weight: 500;
-        }
-        
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f6fa; }
         
         /* التنسيقات العامة */
         .app-container { 
@@ -99,6 +69,7 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            font-family: inherit;
         }
         
         .btn-primary { background: #3498db; color: white; }
@@ -189,6 +160,7 @@
             padding: 20px;
             border-radius: 10px;
             margin-bottom: 20px;
+            position: relative;
         }
         
         .nav-tabs {
@@ -206,6 +178,7 @@
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-family: inherit;
         }
         
         .nav-tab.active {
@@ -298,871 +271,1513 @@
         .status-paid { background: #d4edda; color: #155724; }
         .status-pending { background: #fff3cd; color: #856404; }
         .status-overdue { background: #f8d7da; color: #721c24; }
+
+        /* تنسيقات جديدة للـ API */
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .role-selector {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .role-option {
+            flex: 1;
+            min-width: 120px;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .role-option:hover {
+            border-color: #3498db;
+        }
+
+        .role-option.selected {
+            border-color: #3498db;
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+
+        .role-option i {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            color: #3498db;
+        }
+
+        /* ========== تنسيقات نظام الإشعارات ========== */
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            max-width: 400px;
+        }
+
+        .notification {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            margin-bottom: 10px;
+            padding: 15px;
+            border-right: 4px solid #3498db;
+            animation: slideIn 0.3s ease-out;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .notification.success {
+            border-right-color: #27ae60;
+        }
+
+        .notification.error {
+            border-right-color: #e74c3c;
+        }
+
+        .notification.warning {
+            border-right-color: #f39c12;
+        }
+
+        .notification.info {
+            border-right-color: #3498db;
+        }
+
+        .notification-icon {
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+
+        .notification-message {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: #95a5a6;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 0;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .notification-close:hover {
+            color: #e74c3c;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* زر الإشعارات في الهيدر */
+        .notification-bell {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .notification-bell:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+
+        .notification-bell i {
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* لوحة الإشعارات */
+        .notifications-panel {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            width: 350px;
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
+        }
+
+        .notifications-panel.show {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .notifications-header {
+            padding: 15px;
+            border-bottom: 1px solid #ecf0f1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .notifications-header h3 {
+            margin: 0;
+            color: #2c3e50;
+        }
+
+        .notifications-list {
+            padding: 0;
+        }
+
+        .notification-item {
+            padding: 15px;
+            border-bottom: 1px solid #f8f9fa;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            gap: 10px;
+        }
+
+        .notification-item:hover {
+            background: #f8f9fa;
+        }
+
+        .notification-item.unread {
+            background: #f0f8ff;
+        }
+
+        .notification-item-icon {
+            color: #3498db;
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+
+        .notification-item-content {
+            flex: 1;
+        }
+
+        .notification-item-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+
+        .notification-item-message {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .notification-item-time {
+            color: #95a5a6;
+            font-size: 0.8rem;
+        }
+
+        .notifications-footer {
+            padding: 10px;
+            text-align: center;
+            border-top: 1px solid #ecf0f1;
+        }
+
+        .notifications-footer a {
+            color: #3498db;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .notifications-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* تبويب الإشعارات في الداشبورد */
+        .notifications-tab {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .notification-actions {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .notification-actions button {
+            padding: 5px 10px;
+            font-size: 0.8rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 30px;
+            color: #95a5a6;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #bdc3c7;
+        }
     </style>
 </head>
 <body>
     <div id="app">
         <!-- المحتوى سيحمل هنا ديناميكياً -->
+        <div class="loading">
+            <h2>جاري تحميل نظام Darri...</h2>
+            <p>يتم تهيئة التطبيق</p>
+        </div>
     </div>
 
+    <!-- حاوية الإشعارات العائمة -->
+    <div id="notificationContainer" class="notification-container"></div>
+
     <script>
-        // حالة التطبيق
-        const appState = {
+        // ==================== API.js ====================
+        const API_BASE_URL = 'http://localhost:3000/api';
+
+        class API {
+            static token = localStorage.getItem('token');
+            static user = JSON.parse(localStorage.getItem('user') || '{}');
+
+            static async request(endpoint, options = {}) {
+                const url = `${API_BASE_URL}${endpoint}`;
+                const config = {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...options.headers
+                    },
+                    ...options
+                };
+
+                if (this.token) {
+                    config.headers.Authorization = `Bearer ${this.token}`;
+                }
+
+                if (options.body) {
+                    config.body = JSON.stringify(options.body);
+                }
+
+                try {
+                    const response = await fetch(url, config);
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(data.error || 'حدث خطأ في الخادم');
+                    }
+
+                    return data;
+                } catch (error) {
+                    console.error('API Error:', error);
+                    throw error;
+                }
+            }
+
+            // المصادقة
+            static async login(email, password, role) {
+                const data = await this.request('/login', {
+                    method: 'POST',
+                    body: { email, password, role }
+                });
+
+                this.token = data.token;
+                this.user = data.user;
+                
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('user', JSON.stringify(data.user));
+
+                return data;
+            }
+
+            static async register(userData) {
+                const data = await this.request('/register', {
+                    method: 'POST',
+                    body: userData
+                });
+
+                this.token = data.token;
+                this.user = data.user;
+                
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('user', JSON.stringify(data.user));
+
+                return data;
+            }
+
+            static logout() {
+                this.token = null;
+                this.user = null;
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+            }
+
+            // المستخدمين
+            static async getCurrentUser() {
+                return await this.request('/user');
+            }
+
+            // العقارات
+            static async addProperty(propertyData) {
+                return await this.request('/properties', {
+                    method: 'POST',
+                    body: propertyData
+                });
+            }
+
+            static async getOwnerProperties() {
+                return await this.request('/owner/properties');
+            }
+
+            // العقود
+            static async addContract(contractData) {
+                return await this.request('/contracts', {
+                    method: 'POST',
+                    body: contractData
+                });
+            }
+
+            // طلبات الصيانة
+            static async addMaintenanceRequest(requestData) {
+                return await this.request('/maintenance', {
+                    method: 'POST',
+                    body: requestData
+                });
+            }
+
+            static async getMaintenanceRequests() {
+                return await this.request('/maintenance');
+            }
+
+            static async updateMaintenanceStatus(requestId, status) {
+                return await this.request(`/maintenance/${requestId}`, {
+                    method: 'PUT',
+                    body: { status }
+                });
+            }
+
+            // الفواتير
+            static async addInvoice(invoiceData) {
+                return await this.request('/invoices', {
+                    method: 'POST',
+                    body: invoiceData
+                });
+            }
+
+            // الإشعارات
+            static async getNotifications() {
+                return await this.request('/notifications');
+            }
+
+            static async markNotificationAsRead(notificationId) {
+                return await this.request(`/notifications/${notificationId}/read`, {
+                    method: 'PUT'
+                });
+            }
+
+            static async markAllNotificationsAsRead() {
+                return await this.request('/notifications/read-all', {
+                    method: 'PUT'
+                });
+            }
+
+            static async deleteNotification(notificationId) {
+                return await this.request(`/notifications/${notificationId}`, {
+                    method: 'DELETE'
+                });
+            }
+
+            // الإحصائيات
+            static async getStats() {
+                return await this.request('/stats');
+            }
+        }
+
+        // ==================== نظام الإشعارات ====================
+        class NotificationSystem {
+            static notifications = [];
+            static unreadCount = 0;
+
+            static init() {
+                // تحميل الإشعارات عند بدء التشغيل
+                this.loadNotifications();
+                
+                // محاكاة إشعارات جديدة كل 30 ثانية (للتجربة فقط)
+                setInterval(() => {
+                    if (API.token && Math.random() > 0.7) {
+                        this.addDemoNotification();
+                    }
+                }, 30000);
+            }
+
+            static async loadNotifications() {
+                if (!API.token) return;
+
+                try {
+                    const data = await API.getNotifications();
+                    this.notifications = data.notifications || [];
+                    this.updateUnreadCount();
+                    this.updateNotificationBell();
+                } catch (error) {
+                    console.error('Error loading notifications:', error);
+                }
+            }
+
+            static updateUnreadCount() {
+                this.unreadCount = this.notifications.filter(n => !n.read).length;
+            }
+
+            static updateNotificationBell() {
+                const bell = document.querySelector('.notification-bell');
+                if (!bell) return;
+
+                let badge = bell.querySelector('.notification-badge');
+                if (!badge && this.unreadCount > 0) {
+                    badge = document.createElement('div');
+                    badge.className = 'notification-badge';
+                    bell.appendChild(badge);
+                }
+
+                if (badge) {
+                    badge.textContent = this.unreadCount > 99 ? '99+' : this.unreadCount;
+                    if (this.unreadCount === 0) {
+                        badge.remove();
+                    }
+                }
+            }
+
+            static showNotification(title, message, type = 'info', duration = 5000) {
+                const container = document.getElementById('notificationContainer');
+                if (!container) return;
+
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.innerHTML = `
+                    <div class="notification-icon">
+                        ${this.getNotificationIcon(type)}
+                    </div>
+                    <div class="notification-content">
+                        <div class="notification-title">${title}</div>
+                        <div class="notification-message">${message}</div>
+                    </div>
+                    <button class="notification-close" onclick="this.parentElement.remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+
+                container.appendChild(notification);
+
+                // إزالة الإشعار تلقائياً بعد المدة المحددة
+                if (duration > 0) {
+                    setTimeout(() => {
+                        if (notification.parentElement) {
+                            notification.remove();
+                        }
+                    }, duration);
+                }
+
+                return notification;
+            }
+
+            static getNotificationIcon(type) {
+                const icons = {
+                    'success': '<i class="fas fa-check-circle" style="color: #27ae60;"></i>',
+                    'error': '<i class="fas fa-exclamation-circle" style="color: #e74c3c;"></i>',
+                    'warning': '<i class="fas fa-exclamation-triangle" style="color: #f39c12;"></i>',
+                    'info': '<i class="fas fa-info-circle" style="color: #3498db;"></i>'
+                };
+                return icons[type] || icons.info;
+            }
+
+            static renderNotificationsPanel() {
+                return `
+                    <div class="notifications-panel">
+                        <div class="notifications-header">
+                            <h3>الإشعارات</h3>
+                            <div>
+                                <button class="btn btn-light btn-sm" onclick="NotificationSystem.markAllAsRead()">
+                                    تعيين الكل كمقروء
+                                </button>
+                            </div>
+                        </div>
+                        <div class="notifications-list">
+                            ${this.notifications.length > 0 ? 
+                                this.notifications.map(notification => `
+                                    <div class="notification-item ${notification.read ? '' : 'unread'}" 
+                                         onclick="NotificationSystem.handleNotificationClick('${notification.id}')">
+                                        <div class="notification-item-icon">
+                                            ${this.getNotificationIcon(notification.type)}
+                                        </div>
+                                        <div class="notification-item-content">
+                                            <div class="notification-item-title">${notification.title}</div>
+                                            <div class="notification-item-message">${notification.message}</div>
+                                            <div class="notification-item-time">${this.formatTime(notification.createdAt)}</div>
+                                        </div>
+                                    </div>
+                                `).join('') : 
+                                `<div class="empty-state">
+                                    <i class="fas fa-bell-slash"></i>
+                                    <p>لا توجد إشعارات</p>
+                                </div>`
+                            }
+                        </div>
+                        <div class="notifications-footer">
+                            <a href="#" onclick="app.switchTab('notifications')">عرض جميع الإشعارات</a>
+                        </div>
+                    </div>
+                `;
+            }
+
+            static renderNotificationsTab() {
+                return `
+                    <div class="notifications-tab">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <h2>الإشعارات</h2>
+                            <div>
+                                <button class="btn btn-primary" onclick="NotificationSystem.markAllAsRead()">
+                                    تعيين الكل كمقروء
+                                </button>
+                                <button class="btn btn-light" onclick="NotificationSystem.loadNotifications()">
+                                    تحديث
+                                </button>
+                            </div>
+                        </div>
+                        
+                        ${this.notifications.length > 0 ? 
+                            this.notifications.map(notification => `
+                                <div class="card ${notification.read ? '' : 'unread'}" style="border-right-color: ${this.getNotificationColor(notification.type)};">
+                                    <div style="display: flex; justify-content: between; align-items: flex-start;">
+                                        <div style="flex: 1;">
+                                            <h3>${notification.title}</h3>
+                                            <p>${notification.message}</p>
+                                            <div style="color: #95a5a6; font-size: 0.9rem; margin-top: 10px;">
+                                                ${this.formatTime(notification.createdAt)}
+                                            </div>
+                                        </div>
+                                        <div class="notification-actions">
+                                            ${!notification.read ? `
+                                                <button class="btn btn-light btn-sm" onclick="NotificationSystem.markAsRead('${notification.id}')">
+                                                    تعيين كمقروء
+                                                </button>
+                                            ` : ''}
+                                            <button class="btn btn-danger btn-sm" onclick="NotificationSystem.deleteNotification('${notification.id}')">
+                                                حذف
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('') : 
+                            `<div class="empty-state">
+                                <i class="fas fa-bell-slash"></i>
+                                <h3>لا توجد إشعارات</h3>
+                                <p>سيظهر هنا أي إشعارات جديدة تتلقاها</p>
+                            </div>`
+                        }
+                    </div>
+                `;
+            }
+
+            static getNotificationColor(type) {
+                const colors = {
+                    'success': '#27ae60',
+                    'error': '#e74c3c',
+                    'warning': '#f39c12',
+                    'info': '#3498db'
+                };
+                return colors[type] || colors.info;
+            }
+
+            static formatTime(timestamp) {
+                if (!timestamp) return 'قبل قليل';
+                
+                const date = new Date(timestamp);
+                const now = new Date();
+                const diffMs = now - date;
+                const diffMins = Math.floor(diffMs / 60000);
+                const diffHours = Math.floor(diffMs / 3600000);
+                const diffDays = Math.floor(diffMs / 86400000);
+                
+                if (diffMins < 1) return 'الآن';
+                if (diffMins < 60) return `قبل ${diffMins} دقيقة`;
+                if (diffHours < 24) return `قبل ${diffHours} ساعة`;
+                if (diffDays < 7) return `قبل ${diffDays} يوم`;
+                
+                return date.toLocaleDateString('ar-SA');
+            }
+
+            static async handleNotificationClick(notificationId) {
+                await this.markAsRead(notificationId);
+                this.hideNotificationsPanel();
+            }
+
+            static async markAsRead(notificationId) {
+                try {
+                    await API.markNotificationAsRead(notificationId);
+                    
+                    // تحديث الحالة محلياً
+                    const notification = this.notifications.find(n => n.id === notificationId);
+                    if (notification) {
+                        notification.read = true;
+                    }
+                    
+                    this.updateUnreadCount();
+                    this.updateNotificationBell();
+                    
+                    // إعادة تحميل لوحة الإشعارات إذا كانت مفتوحة
+                    this.refreshNotificationsPanel();
+                    
+                } catch (error) {
+                    console.error('Error marking notification as read:', error);
+                }
+            }
+
+            static async markAllAsRead() {
+                try {
+                    await API.markAllNotificationsAsRead();
+                    
+                    // تحديث الحالة محلياً
+                    this.notifications.forEach(n => n.read = true);
+                    
+                    this.updateUnreadCount();
+                    this.updateNotificationBell();
+                    this.refreshNotificationsPanel();
+                    
+                    app.showMessage('تم تعيين جميع الإشعارات كمقروءة', 'success');
+                    
+                } catch (error) {
+                    console.error('Error marking all notifications as read:', error);
+                    app.showMessage('حدث خطأ في تعيين الإشعارات كمقروءة', 'error');
+                }
+            }
+
+            static async deleteNotification(notificationId) {
+                try {
+                    await API.deleteNotification(notificationId);
+                    
+                    // إزالة الإشعار محلياً
+                    this.notifications = this.notifications.filter(n => n.id !== notificationId);
+                    
+                    this.updateUnreadCount();
+                    this.updateNotificationBell();
+                    this.refreshNotificationsPanel();
+                    
+                    app.showMessage('تم حذف الإشعار', 'success');
+                    
+                } catch (error) {
+                    console.error('Error deleting notification:', error);
+                    app.showMessage('حدث خطأ في حذف الإشعار', 'error');
+                }
+            }
+
+            static refreshNotificationsPanel() {
+                const panel = document.querySelector('.notifications-panel');
+                if (panel) {
+                    panel.innerHTML = this.renderNotificationsPanel();
+                }
+                
+                // إذا كان تبويب الإشعارات مفتوحاً، قم بتحديثه
+                const notificationsTab = document.getElementById('notificationsContent');
+                if (notificationsTab && notificationsTab.classList.contains('active')) {
+                    notificationsTab.innerHTML = this.renderNotificationsTab();
+                }
+            }
+
+            static hideNotificationsPanel() {
+                document.querySelectorAll('.notifications-panel').forEach(panel => {
+                    panel.classList.remove('show');
+                });
+            }
+
+            static toggleNotificationsPanel() {
+                const panel = document.querySelector('.notifications-panel');
+                if (panel) {
+                    panel.classList.toggle('show');
+                }
+            }
+
+            // إضافة إشعار تجريبي (للتجربة فقط)
+            static addDemoNotification() {
+                const types = ['info', 'success', 'warning', 'error'];
+                const type = types[Math.floor(Math.random() * types.length)];
+                
+                const demoNotifications = [
+                    {
+                        title: 'دفعة جديدة',
+                        message: 'تم استلام دفعة إيجار جديدة من المستأجر أحمد محمد',
+                        type: 'success'
+                    },
+                    {
+                        title: 'طلب صيانة',
+                        message: 'تم تقديم طلب صيانة جديد للوحدة 203',
+                        type: 'info'
+                    },
+                    {
+                        title: 'تذكير بالدفع',
+                        message: 'موعد دفع الإيجار يقترب للوحدة 105',
+                        type: 'warning'
+                    },
+                    {
+                        title: 'مشكلة في النظام',
+                        message: 'تم اكتشاف مشكلة تقنية في النظام، جاري العمل على حلها',
+                        type: 'error'
+                    }
+                ];
+                
+                const notification = demoNotifications[Math.floor(Math.random() * demoNotifications.length)];
+                
+                // إضافة الإشعار محلياً
+                const newNotification = {
+                    id: 'demo-' + Date.now(),
+                    title: notification.title,
+                    message: notification.message,
+                    type: type,
+                    read: false,
+                    createdAt: new Date().toISOString()
+                };
+                
+                this.notifications.unshift(newNotification);
+                this.updateUnreadCount();
+                this.updateNotificationBell();
+                
+                // عرض إشعار عائم
+                this.showNotification(notification.title, notification.message, type);
+            }
+        }
+
+        // ==================== MAIN.js ====================
+        // التطبيق الرئيسي
+        const app = {
             currentUser: null,
-            currentView: 'home',
-            currentTab: 'dashboard'
-        };
-
-        // بيانات تجريبية
-        const sampleData = {
-            user: {
-                name: "أحمد محمد",
-                email: "ahmed@example.com",
-                role: "مالك"
+            currentRole: null,
+            
+            async init() {
+                console.log('🚀 بدء تشغيل تطبيق Darri...');
+                
+                // تهيئة نظام الإشعارات
+                NotificationSystem.init();
+                
+                // التحقق من وجود توكن مسجل
+                const token = localStorage.getItem('token');
+                const user = JSON.parse(localStorage.getItem('user') || '{}');
+                
+                if (token && user.role) {
+                    API.token = token;
+                    API.user = user;
+                    this.currentUser = user;
+                    this.currentRole = user.role;
+                    
+                    try {
+                        // التحقق من صحة التوكن
+                        await API.getCurrentUser();
+                        await this.loadDashboard(this.currentRole);
+                    } catch (error) {
+                        console.error('فشل في تحميل لوحة التحكم:', error);
+                        this.showHome();
+                    }
+                } else {
+                    this.showHome();
+                }
+                
+                this.setupEventListeners();
             },
-            stats: {
-                properties: 12,
-                tenants: 8,
-                payments: 45,
-                maintenance: 3
+            
+            setupEventListeners() {
+                // إغلاق الإشعارات عند النقر خارجها
+                document.addEventListener('click', function(e) {
+                    if (!e.target.closest('.notification-bell') && !e.target.closest('.notifications-panel')) {
+                        NotificationSystem.hideNotificationsPanel();
+                    }
+                });
             },
-            properties: [
-                { id: 1, name: "فيلا الرياض", type: "فيلا", status: "مشغولة" },
-                { id: 2, name: "شقة جدة", type: "شقة", status: "شاغرة" },
-                { id: 3, name: "مكتب الدمام", type: "مكتب", status: "مشغولة" }
-            ],
-            tenants: [
-                { id: 1, name: "محمد أحمد", property: "فيلا الرياض", phone: "0551234567" },
-                { id: 2, name: "فاطمة علي", property: "شقة جدة", phone: "0557654321" }
-            ],
-            payments: [
-                { id: 1, tenant: "محمد أحمد", amount: "5000", date: "2024-01-01", status: "مدفوع" },
-                { id: 2, tenant: "فاطمة علي", amount: "3000", date: "2024-01-02", status: "معلق" }
-            ]
-        };
-
-        // الدوال الرئيسية
-       function showHome() {
-    appState.currentView = 'home';
-    document.getElementById('app').innerHTML = `
-        <div class="auth-container">
-            <div class="main-box">
-                <div style="text-align: center; margin-bottom: 30px;">
-                    <div style="font-size: 3em; margin-bottom: 10px;">🏘️</div>
-                    <h1>داري</h1>
-                    <p class="subtitle">نظام إدارة العقارات الذكي</p>
-                </div>
-                
-                <div style="text-align: center; margin: 30px 0;">
-                    <button class="btn btn-primary" onclick="showLogin()" style="margin: 10px; padding: 15px 30px;">
-                        🔐 تسجيل الدخول
-                    </button>
-                    <button class="btn btn-secondary" onclick="showRegister()" style="margin: 10px; padding: 15px 30px;">
-                        📝 إنشاء حساب
-                    </button>
-                </div>
-                
-                <div class="features">
-                    <h3 style="text-align: center; color: #2d3748; margin-bottom: 20px;">✨ لماذا تختار داري؟</h3>
-                    <div class="feature-item">
-                        <div class="feature-icon">🏢</div>
-                        <div>
-                            <strong>إدارة عقارات ذكية</strong>
-                            <div style="color: #718096; font-size: 14px;">إدارة شاملة لكل وحداتك العقارية</div>
-                        </div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">👥</div>
-                        <div>
-                            <strong>متابعة المستأجرين</strong>
-                            <div style="color: #718096; font-size: 14px;">تنظيم عقود ومتابعة مستأجرين</div>
-                        </div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">💰</div>
-                        <div>
-                            <strong>تحصيل آمن</strong>
-                            <div style="color: #718096; font-size: 14px;">تتبع المدفوعات والإشعارات</div>
-                        </div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">🔧</div>
-                        <div>
-                            <strong>خدمة الصيانة</strong>
-                            <div style="color: #718096; font-size: 14px;">إدارة طلبات الصيانة بسهولة</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-}
-        function showLogin() {
-            appState.currentView = 'login';
-            document.getElementById('app').innerHTML = `
-                <div class="auth-container">
-                    <div class="main-box">
-                        <button class="btn btn-light" onclick="showHome()" style="margin-bottom: 20px;">
-                            ← الرجوع
-                        </button>
-                        
-                        <h2>تسجيل الدخول</h2>
-                        <p class="subtitle">أدخل بيانات حسابك</p>
-                        
-                        <form id="loginForm">
-                            <div class="form-group">
-                                <label for="loginEmail">البريد الإلكتروني</label>
-                                <input type="email" id="loginEmail" placeholder="example@email.com" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="loginPassword">كلمة المرور</label>
-                                <input type="password" id="loginPassword" placeholder="أدخل كلمة المرور" required>
-                            </div>
-                            
-                            <button type="submit" class="btn btn-primary btn-block">
-                                🔐 دخول إلى المنصة
-                            </button>
-                        </form>
-                        
-                        <div class="auth-links">
-                            <a href="#" onclick="showRegister()">إنشاء حساب جديد</a>
-                        </div>
-                        
-                        <div id="loginMessage"></div>
-                    </div>
-                </div>
-            `;
             
-            setTimeout(() => {
-                document.getElementById('loginForm').addEventListener('submit', function(e) {
+            async showHome() {
+                document.getElementById('app').innerHTML = `
+                    <div class="auth-container">
+                        <div class="main-box">
+                            <div style="text-align: center; margin-bottom: 30px;">
+                                <div style="font-size: 3em; margin-bottom: 10px;">🏘️</div>
+                                <h1>داري</h1>
+                                <p class="subtitle">نظام إدارة العقارات الذكي</p>
+                            </div>
+                            
+                            <div style="text-align: center; margin: 30px 0;">
+                                <button class="btn btn-primary" onclick="app.showLogin()" style="margin: 10px; padding: 15px 30px;">
+                                    🔐 تسجيل الدخول
+                                </button>
+                                <button class="btn btn-secondary" onclick="app.showRegister()" style="margin: 10px; padding: 15px 30px;">
+                                    📝 إنشاء حساب
+                                </button>
+                            </div>
+                            
+                            <div class="features">
+                                <h3 style="text-align: center; color: #2d3748; margin-bottom: 20px;">✨ لماذا تختار داري؟</h3>
+                                <div class="feature-item">
+                                    <div class="feature-icon">🏢</div>
+                                    <div>
+                                        <strong>إدارة عقارات ذكية</strong>
+                                        <div style="color: #718096; font-size: 14px;">إدارة شاملة لكل وحداتك العقارية</div>
+                                    </div>
+                                </div>
+                                <div class="feature-item">
+                                    <div class="feature-icon">👥</div>
+                                    <div>
+                                        <strong>متابعة المستأجرين</strong>
+                                        <div style="color: #718096; font-size: 14px;">تنظيم عقود ومتابعة مستأجرين</div>
+                                    </div>
+                                </div>
+                                <div class="feature-item">
+                                    <div class="feature-icon">💰</div>
+                                    <div>
+                                        <strong>تحصيل آمن</strong>
+                                        <div style="color: #718096; font-size: 14px;">تتبع المدفوعات والإشعارات</div>
+                                    </div>
+                                </div>
+                                <div class="feature-item">
+                                    <div class="feature-icon">🔧</div>
+                                    <div>
+                                        <strong>خدمة الصيانة</strong>
+                                        <div style="color: #718096; font-size: 14px;">إدارة طلبات الصيانة بسهولة</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+            
+            async showLogin() {
+                document.getElementById('app').innerHTML = `
+                    <div class="auth-container">
+                        <div class="main-box">
+                            <button class="btn btn-light" onclick="app.showHome()" style="margin-bottom: 20px;">
+                                ← الرجوع
+                            </button>
+                            
+                            <h2>تسجيل الدخول</h2>
+                            <p class="subtitle">أدخل بيانات حسابك</p>
+                            
+                            <form id="loginForm">
+                                <div class="form-group">
+                                    <label for="loginEmail">البريد الإلكتروني</label>
+                                    <input type="email" id="loginEmail" placeholder="example@email.com" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="loginPassword">كلمة المرور</label>
+                                    <input type="password" id="loginPassword" placeholder="أدخل كلمة المرور" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="loginRole">الدور</label>
+                                    <select id="loginRole" class="form-control" required>
+                                        <option value="">اختر دورك</option>
+                                        <option value="tenant">مستأجر</option>
+                                        <option value="owner">مالك عقار</option>
+                                        <option value="payment">مسؤول الدفع</option>
+                                        <option value="maintenance">فريق الصيانة</option>
+                                        <option value="admin">المشرف العام</option>
+                                    </select>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary btn-block">
+                                    🔐 دخول إلى المنصة
+                                </button>
+                            </form>
+                            
+                            <div class="auth-links">
+                                <a href="#" onclick="app.showRegister()">إنشاء حساب جديد</a>
+                            </div>
+                            
+                            <div id="loginMessage"></div>
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('loginForm').addEventListener('submit', async (e) => {
                     e.preventDefault();
-                    handleLogin();
+                    await this.handleLogin();
                 });
-            }, 100);
-        }
+            },
 
-        function showRegister() {
-            appState.currentView = 'register';
-            document.getElementById('app').innerHTML = `
-                <div class="auth-container">
-                    <div class="main-box">
-                        <button class="btn btn-light" onclick="showHome()" style="margin-bottom: 20px;">
-                            ← الرجوع
-                        </button>
-                        
-                        <h2>إنشاء حساب جديد</h2>
-                        <p class="subtitle">اختر نوع الحساب</p>
-                        
-                        <div style="text-align: center; margin: 20px 0;">
-                            <button class="btn btn-primary" onclick="showOwnerRegistration()" style="margin: 10px;">
-                                👑 حساب مالك
+            async showRegister() {
+                document.getElementById('app').innerHTML = `
+                    <div class="auth-container">
+                        <div class="main-box">
+                            <button class="btn btn-light" onclick="app.showHome()" style="margin-bottom: 20px;">
+                                ← الرجوع
                             </button>
-                            <button class="btn btn-secondary" onclick="showTenantRegistration()" style="margin: 10px;">
-                                👥 حساب مستأجر
-                            </button>
-                        </div>
-                        
-                        <div class="auth-links">
-                            <a href="#" onclick="showLogin()">لديك حساب already؟</a>
+                            
+                            <h2>إنشاء حساب جديد</h2>
+                            <p class="subtitle">اختر نوع الحساب</p>
+                            
+                            <form id="registerForm">
+                                <div class="form-group">
+                                    <label>اختر دورك</label>
+                                    <div class="role-selector">
+                                        <div class="role-option" data-role="tenant">
+                                            <i class="fas fa-user-tie"></i>
+                                            <div>مستأجر</div>
+                                        </div>
+                                        <div class="role-option" data-role="owner">
+                                            <i class="fas fa-home"></i>
+                                            <div>مالك عقار</div>
+                                        </div>
+                                        <div class="role-option" data-role="payment">
+                                            <i class="fas fa-money-bill-wave"></i>
+                                            <div>مسؤول الدفع</div>
+                                        </div>
+                                        <div class="role-option" data-role="maintenance">
+                                            <i class="fas fa-tools"></i>
+                                            <div>فريق الصيانة</div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="registerRole" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="registerName">الاسم الكامل</label>
+                                    <input type="text" id="registerName" class="form-control" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="registerEmail">البريد الإلكتروني</label>
+                                    <input type="email" id="registerEmail" class="form-control" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="registerPhone">رقم الهاتف</label>
+                                    <input type="tel" id="registerPhone" class="form-control" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="registerPassword">كلمة المرور</label>
+                                    <input type="password" id="registerPassword" class="form-control" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="registerConfirmPassword">تأكيد كلمة المرور</label>
+                                    <input type="password" id="registerConfirmPassword" class="form-control" required>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary btn-block">
+                                    إنشاء حساب
+                                </button>
+                            </form>
+                            
+                            <div class="auth-links">
+                                <a href="#" onclick="app.showLogin()">لديك حساب بالفعل؟</a>
+                            </div>
+
+                            <div id="registerMessage"></div>
                         </div>
                     </div>
-                </div>
-            `;
-        }
+                `;
 
-        function showOwnerRegistration() {
-            document.getElementById('app').innerHTML = `
-                <div class="auth-container">
-                    <div class="main-box">
-                        <button class="btn btn-light" onclick="showRegister()" style="margin-bottom: 20px;">
-                            ← الرجوع
-                        </button>
-                        
-                        <h2>إنشاء حساب مالك</h2>
-                        <p class="subtitle">املأ بيانات حساب المالك</p>
-                        
-                        <form id="ownerRegForm">
-                            <div class="form-group">
-                                <label for="ownerName">الاسم الكامل</label>
-                                <input type="text" id="ownerName" placeholder="أدخل اسمك الكامل" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="ownerEmail">البريد الإلكتروني</label>
-                                <input type="email" id="ownerEmail" placeholder="example@email.com" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="ownerPhone">رقم الهاتف</label>
-                                <input type="tel" id="ownerPhone" placeholder="05XXXXXXXX" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="ownerPassword">كلمة المرور</label>
-                                <input type="password" id="ownerPassword" placeholder="كلمة مرور قوية" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="ownerConfirm">تأكيد كلمة المرور</label>
-                                <input type="password" id="ownerConfirm" placeholder="أعد إدخال كلمة المرور" required>
-                            </div>
-                            
-                            <button type="submit" class="btn btn-primary btn-block">
-                                👑 إنشاء حساب مالك
-                            </button>
-                        </form>
-                        
-                        <div id="ownerRegMessage"></div>
-                    </div>
-                </div>
-            `;
-            
-            setTimeout(() => {
-                document.getElementById('ownerRegForm').addEventListener('submit', function(e) {
+                // Role Selection
+                document.querySelectorAll('.role-option').forEach(option => {
+                    option.addEventListener('click', function() {
+                        document.querySelectorAll('.role-option').forEach(opt => {
+                            opt.classList.remove('selected');
+                        });
+                        this.classList.add('selected');
+                        document.getElementById('registerRole').value = this.getAttribute('data-role');
+                    });
+                });
+                
+                document.getElementById('registerForm').addEventListener('submit', async (e) => {
                     e.preventDefault();
-                    handleOwnerRegistration();
+                    await this.handleRegister();
                 });
-            }, 100);
-        }
+            },
 
-        function showTenantRegistration() {
-            document.getElementById('app').innerHTML = `
-                <div class="auth-container">
-                    <div class="main-box">
-                        <button class="btn btn-light" onclick="showRegister()" style="margin-bottom: 20px;">
-                            ← الرجوع
-                        </button>
-                        
-                        <h2>إنشاء حساب مستأجر</h2>
-                        <p class="subtitle">املأ بيانات حساب المستأجر</p>
-                        
-                        <form id="tenantRegForm">
-                            <div class="form-group">
-                                <label for="tenantName">الاسم الكامل</label>
-                                <input type="text" id="tenantName" placeholder="أدخل اسمك الكامل" required>
+            async handleLogin() {
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                const role = document.getElementById('loginRole').value;
+                const messageEl = document.getElementById('loginMessage');
+                
+                if (!email || !password || !role) {
+                    this.showMessage('⚠️ يرجى ملء جميع الحقول', 'error', messageEl);
+                    return;
+                }
+                
+                this.showMessage('جاري التحقق من البيانات...', 'info', messageEl);
+                
+                try {
+                    await API.login(email, password, role);
+                    this.currentUser = API.user;
+                    this.currentRole = role;
+                    this.showMessage('✅ تم الدخول بنجاح!', 'success', messageEl);
+                    
+                    // تحميل الإشعارات بعد تسجيل الدخول
+                    NotificationSystem.loadNotifications();
+                    
+                    setTimeout(() => {
+                        this.loadDashboard(role);
+                    }, 1500);
+                } catch (error) {
+                    this.showMessage(`❌ ${error.message}`, 'error', messageEl);
+                }
+            },
+
+            async handleRegister() {
+                const formData = {
+                    name: document.getElementById('registerName').value,
+                    email: document.getElementById('registerEmail').value,
+                    password: document.getElementById('registerPassword').value,
+                    phone: document.getElementById('registerPhone').value,
+                    role: document.getElementById('registerRole').value
+                };
+                
+                const confirmPassword = document.getElementById('registerConfirmPassword').value;
+                const messageEl = document.getElementById('registerMessage');
+                
+                if (!formData.name || !formData.email || !formData.password || !formData.role) {
+                    this.showMessage('⚠️ يرجى ملء جميع الحقول', 'error', messageEl);
+                    return;
+                }
+                
+                if (formData.password !== confirmPassword) {
+                    this.showMessage('❌ كلمة المرور غير متطابقة', 'error', messageEl);
+                    return;
+                }
+                
+                if (!formData.role) {
+                    this.showMessage('❌ يرجى اختيار دور المستخدم', 'error', messageEl);
+                    return;
+                }
+                
+                this.showMessage('جاري إنشاء الحساب...', 'info', messageEl);
+                
+                try {
+                    await API.register(formData);
+                    this.currentUser = API.user;
+                    this.currentRole = formData.role;
+                    this.showMessage('✅ تم إنشاء الحساب بنجاح!', 'success', messageEl);
+                    
+                    // تحميل الإشعارات بعد التسجيل
+                    NotificationSystem.loadNotifications();
+                    
+                    setTimeout(() => {
+                        this.loadDashboard(formData.role);
+                    }, 1500);
+                } catch (error) {
+                    this.showMessage(`❌ ${error.message}`, 'error', messageEl);
+                }
+            },
+
+            async loadDashboard(role) {
+                try {
+                    let dashboardHTML = '';
+                    
+                    if (role === 'owner') {
+                        dashboardHTML = this.getOwnerDashboardHTML();
+                    } else if (role === 'tenant') {
+                        dashboardHTML = this.getTenantDashboardHTML();
+                    } else {
+                        dashboardHTML = this.getGenericDashboardHTML(role);
+                    }
+                    
+                    document.getElementById('app').innerHTML = dashboardHTML;
+                    
+                    // تحميل البيانات من الAPI
+                    await this.loadDashboardData(role);
+                    
+                } catch (error) {
+                    console.error('Error loading dashboard:', error);
+                    this.showMessage('حدث خطأ في تحميل لوحة التحكم', 'error');
+                }
+            },
+
+            getOwnerDashboardHTML() {
+                return `
+                    <div class="app-container">
+                        <div class="main-box">
+                            <div class="dashboard-header">
+                                <div class="notification-bell" onclick="NotificationSystem.toggleNotificationsPanel()">
+                                    <i class="fas fa-bell"></i>
+                                    ${NotificationSystem.renderNotificationsPanel()}
+                                </div>
+                                <h1>مرحباً ${this.currentUser?.name || 'مالك العقار'}!</h1>
+                                <p>لوحة تحكم مالك العقار</p>
                             </div>
                             
-                            <div class="form-group">
-                                <label for="tenantEmail">البريد الإلكتروني</label>
-                                <input type="email" id="tenantEmail" placeholder="example@email.com" required>
+                            <div class="nav-tabs">
+                                <button class="nav-tab active" onclick="app.switchTab('dashboard')">📊 الرئيسية</button>
+                                <button class="nav-tab" onclick="app.switchTab('properties')">🏢 العقارات</button>
+                                <button class="nav-tab" onclick="app.switchTab('payments')">💰 المدفوعات</button>
+                                <button class="nav-tab" onclick="app.switchTab('maintenance')">🔧 الصيانة</button>
+                                <button class="nav-tab" onclick="app.switchTab('notifications')">🔔 الإشعارات</button>
                             </div>
                             
-                            <div class="form-group">
-                                <label for="tenantPhone">رقم الهاتف</label>
-                                <input type="tel" id="tenantPhone" placeholder="05XXXXXXXX" required>
+                            <div id="dashboardContent" class="content-section active">
+                                <div class="stats-grid">
+                                    <div class="stat-card">
+                                        <div class="stat-number" id="stats-properties">0</div>
+                                        <div class="stat-label">عقار</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-number" id="stats-tenants">0</div>
+                                        <div class="stat-label">مستأجر</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-number" id="stats-payments">0</div>
+                                        <div class="stat-label">دفعة</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-number" id="stats-maintenance">0</div>
+                                        <div class="stat-label">طلب صيانة</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="card">
+                                    <h3>آخر النشاطات</h3>
+                                    <div id="recent-activities">جاري تحميل النشاطات...</div>
+                                </div>
                             </div>
                             
-                            <div class="form-group">
-                                <label for="tenantPassword">كلمة المرور</label>
-                                <input type="password" id="tenantPassword" placeholder="كلمة مرور قوية" required>
+                            <div id="propertiesContent" class="content-section">
+                                <h2>إدارة العقارات</h2>
+                                <button class="btn btn-primary" onclick="app.showAddProperty()">➕ إضافة عقار</button>
+                                <div id="properties-list" class="card">
+                                    <h3>قائمة العقارات</h3>
+                                    <p>جاري تحميل العقارات...</p>
+                                </div>
                             </div>
                             
-                            <div class="form-group">
-                                <label for="tenantConfirm">تأكيد كلمة المرور</label>
-                                <input type="password" id="tenantConfirm" placeholder="أعد إدخال كلمة المرور" required>
+                            <div id="paymentsContent" class="content-section">
+                                <h2>إدارة المدفوعات</h2>
+                                <div id="payments-list" class="card">
+                                    <h3>سجل المدفوعات</h3>
+                                    <p>جاري تحميل المدفوعات...</p>
+                                </div>
                             </div>
                             
-                            <button type="submit" class="btn btn-secondary btn-block">
-                                👥 إنشاء حساب مستأجر
-                            </button>
-                        </form>
-                        
-                        <div id="tenantRegMessage"></div>
+                            <div id="maintenanceContent" class="content-section">
+                                <h2>طلبات الصيانة</h2>
+                                <div id="maintenance-list" class="card">
+                                    <h3>الطلبات الحالية</h3>
+                                    <p>جاري تحميل طلبات الصيانة...</p>
+                                </div>
+                            </div>
+                            
+                            <div id="notificationsContent" class="content-section">
+                                ${NotificationSystem.renderNotificationsTab()}
+                            </div>
+                            
+                            <div style="text-align: center; margin-top: 30px;">
+                                <button class="btn btn-warning" onclick="app.logout()">🚪 تسجيل الخروج</button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            `;
-            
-            setTimeout(() => {
-                document.getElementById('tenantRegForm').addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    handleTenantRegistration();
+                `;
+            },
+
+            getTenantDashboardHTML() {
+                return `
+                    <div class="app-container">
+                        <div class="main-box">
+                            <div class="dashboard-header" style="background: linear-gradient(135deg, #27ae60, #229954);">
+                                <div class="notification-bell" onclick="NotificationSystem.toggleNotificationsPanel()">
+                                    <i class="fas fa-bell"></i>
+                                    ${NotificationSystem.renderNotificationsPanel()}
+                                </div>
+                                <h1>مرحباً ${this.currentUser?.name || 'المستأجر'}!</h1>
+                                <p>لوحة تحكم المستأجر</p>
+                            </div>
+                            
+                            <div class="nav-tabs">
+                                <button class="nav-tab active" onclick="app.switchTab('dashboard')">📊 الرئيسية</button>
+                                <button class="nav-tab" onclick="app.switchTab('contract')">📄 العقد</button>
+                                <button class="nav-tab" onclick="app.switchTab('payments')">💰 مدفوعاتي</button>
+                                <button class="nav-tab" onclick="app.switchTab('maintenance')">🔧 طلبات الصيانة</button>
+                                <button class="nav-tab" onclick="app.switchTab('notifications')">🔔 الإشعارات</button>
+                            </div>
+                            
+                            <div id="dashboardContent" class="content-section active">
+                                <div class="stats-grid">
+                                    <div class="stat-card" style="border-top-color: #27ae60;">
+                                        <div class="stat-number" id="stats-property">-</div>
+                                        <div class="stat-label">العقار الحالي</div>
+                                    </div>
+                                    <div class="stat-card" style="border-top-color: #3498db;">
+                                        <div class="stat-number" id="stats-rent">0 ر.س</div>
+                                        <div class="stat-label">الإيجار الشهري</div>
+                                    </div>
+                                    <div class="stat-card" style="border-top-color: #e74c3c;">
+                                        <div class="stat-number" id="stats-days">0</div>
+                                        <div class="stat-label">أيام للدفع</div>
+                                    </div>
+                                    <div class="stat-card" style="border-top-color: #f39c12;">
+                                        <div class="stat-number" id="stats-maintenance">0</div>
+                                        <div class="stat-label">طلبات صيانة</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="card">
+                                    <h3>آخر النشاطات</h3>
+                                    <div id="recent-activities">جاري تحميل النشاطات...</div>
+                                </div>
+                            </div>
+                            
+                            <div id="notificationsContent" class="content-section">
+                                ${NotificationSystem.renderNotificationsTab()}
+                            </div>
+                            
+                            <div style="text-align: center; margin-top: 30px;">
+                                <button class="btn btn-warning" onclick="app.logout()">🚪 تسجيل الخروج</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+
+            getGenericDashboardHTML(role) {
+                const roleNames = {
+                    'payment': 'مسؤول الدفع',
+                    'maintenance': 'فريق الصيانة', 
+                    'admin': 'المشرف العام'
+                };
+                
+                return `
+                    <div class="app-container">
+                        <div class="main-box">
+                            <div class="dashboard-header">
+                                <div class="notification-bell" onclick="NotificationSystem.toggleNotificationsPanel()">
+                                    <i class="fas fa-bell"></i>
+                                    ${NotificationSystem.renderNotificationsPanel()}
+                                </div>
+                                <h1>مرحباً ${this.currentUser?.name || 'مستخدم'}!</h1>
+                                <p>لوحة تحكم ${roleNames[role] || role}</p>
+                            </div>
+                            
+                            <div class="nav-tabs">
+                                <button class="nav-tab active" onclick="app.switchTab('dashboard')">📊 الرئيسية</button>
+                                <button class="nav-tab" onclick="app.switchTab('notifications')">🔔 الإشعارات</button>
+                            </div>
+                            
+                            <div id="dashboardContent" class="content-section active">
+                                <div class="card">
+                                    <h3>لوحة التحكم قيد التطوير</h3>
+                                    <p>سيتم إضافة المزيد من الميزات قريباً...</p>
+                                    <p>الدور الحالي: ${roleNames[role] || role}</p>
+                                </div>
+                            </div>
+                            
+                            <div id="notificationsContent" class="content-section">
+                                ${NotificationSystem.renderNotificationsTab()}
+                            </div>
+                            
+                            <div style="text-align: center; margin-top: 30px;">
+                                <button class="btn btn-warning" onclick="app.logout()">🚪 تسجيل الخروج</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+
+            async loadDashboardData(role) {
+                try {
+                    // جلب الإحصائيات
+                    const statsData = await API.getStats();
+                    this.updateStats(role, statsData.stats);
+                    
+                    // جلب البيانات الإضافية حسب الدور
+                    if (role === 'owner') {
+                        const propertiesData = await API.getOwnerProperties();
+                        this.renderProperties(propertiesData.properties);
+                    }
+                    
+                } catch (error) {
+                    console.error('Error loading dashboard data:', error);
+                    this.showMessage('حدث خطأ في تحميل البيانات', 'error');
+                }
+            },
+
+            updateStats(role, stats) {
+                if (!stats) return;
+                
+                Object.keys(stats).forEach(statKey => {
+                    const element = document.getElementById(`stats-${statKey}`);
+                    if (element) {
+                        element.textContent = stats[statKey];
+                    }
                 });
-            }, 100);
-        }
+            },
 
-        function handleLogin() {
-    const email = document.getElementById('loginEmail').value;
-    const password = document.getElementById('loginPassword').value;
-    const messageEl = document.getElementById('loginMessage');
-    
-    if (!email || !password) {
-        showMessage('⚠️ يرجى ملء جميع الحقول', 'error', messageEl);
-        return;
-    }
-    
-    showMessage('جاري التحقق من البيانات...', 'info', messageEl);
-    
-    // محاكاة الدخول مع تحديد نوع المستخدم
-    setTimeout(() => {
-        // تحديد نوع المستخدم بناء على الإيميل
-        let userType = 'tenant'; // افتراضي مستأجر
-        let userName = "مستأجر";
-        
-        if (email.includes('owner') || email.includes('malek') || email.includes('admin')) {
-            userType = 'owner';
-            userName = "أحمد محمد";
-        } else if (email.includes('tenant') || email.includes('mostager')) {
-            userType = 'tenant';
-            userName = "محمد أحمد";
-        } else {
-            // إذا الإيميل عادي، نفرض أنه مستأجر
-            userType = 'tenant';
-            userName = "مستخدم جديد";
-        }
-        
-        appState.currentUser = {
-            name: userName,
-            email: email,
-            role: userType === 'owner' ? 'مالك' : 'مستأجر',
-            type: userType
-        };
-        
-        showMessage('✅ تم الدخول بنجاح!', 'success', messageEl);
-        
-        setTimeout(() => {
-            if (userType === 'owner') {
-                showOwnerDashboard();
-            } else {
-                showTenantDashboard();
+            renderProperties(properties) {
+                const container = document.getElementById('properties-list');
+                if (!container || !properties) return;
+                
+                if (properties.length === 0) {
+                    container.innerHTML = '<p>لا توجد عقارات مسجلة</p>';
+                    return;
+                }
+                
+                container.innerHTML = `
+                    <h3>قائمة العقارات</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>اسم العقار</th>
+                                <th>النوع</th>
+                                <th>الوحدات</th>
+                                <th>الحالة</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${properties.map(property => `
+                                <tr>
+                                    <td>${property.name}</td>
+                                    <td>${property.type}</td>
+                                    <td>${property.units}</td>
+                                    <td>${property.status}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+            },
+
+            switchTab(tabName) {
+                // إخفاء كل المحتوى
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // إلغاء تنشيط كل الأزرار
+                document.querySelectorAll('.nav-tab').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                
+                // إظهار المحتوى المطلوب
+                const targetContent = document.getElementById(tabName + 'Content');
+                if (targetContent) {
+                    targetContent.classList.add('active');
+                }
+                
+                // تنشيط الزر المطلوب
+                event.target.classList.add('active');
+                
+                // تحديث لوحة الإشعارات إذا كانت مفتوحة
+                if (tabName === 'notifications') {
+                    NotificationSystem.refreshNotificationsPanel();
+                }
+            },
+
+            showAddProperty() {
+                alert('📝 صفحة إضافة عقار جديد - جاري التطوير');
+            },
+
+            logout() {
+                API.logout();
+                this.currentUser = null;
+                this.currentRole = null;
+                this.showHome();
+            },
+
+            showMessage(message, type, container) {
+                if (!container) {
+                    container = document.getElementById('app');
+                    if (!container) return;
+                    
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = `message ${type}`;
+                    messageDiv.textContent = message;
+                    container.prepend(messageDiv);
+                    
+                    setTimeout(() => {
+                        messageDiv.remove();
+                    }, 5000);
+                } else {
+                    container.innerHTML = `
+                        <div class="message ${type}">
+                            ${message}
+                        </div>
+                    `;
+                }
             }
-        }, 1500);
-    }, 1000);
-}
-
-function handleOwnerRegistration() {
-    const name = document.getElementById('ownerName').value;
-    const email = document.getElementById('ownerEmail').value;
-    const phone = document.getElementById('ownerPhone').value;
-    const password = document.getElementById('ownerPassword').value;
-    const confirm = document.getElementById('ownerConfirm').value;
-    const messageEl = document.getElementById('ownerRegMessage');
-    
-    if (!name || !email || !phone || !password || !confirm) {
-        showMessage('⚠️ يرجى ملء جميع الحقول', 'error', messageEl);
-        return;
-    }
-    
-    if (password !== confirm) {
-        showMessage('❌ كلمة المرور غير متطابقة', 'error', messageEl);
-        return;
-    }
-    
-    showMessage('جاري إنشاء الحساب...', 'info', messageEl);
-    
-    setTimeout(() => {
-        // حفظ بيانات المالك
-        appState.currentUser = {
-            name: name,
-            email: email,
-            phone: phone,
-            role: 'مالك',
-            type: 'owner'
         };
-        
-        showMessage('✅ تم إنشاء حساب المالك بنجاح!', 'success', messageEl);
-        
-        setTimeout(() => {
-            showOwnerDashboard(); // توجيه مباشر لدشبورد المالك
-        }, 1500);
-    }, 1000);
-}
-
-        function handleTenantRegistration() {
-    const name = document.getElementById('tenantName').value;
-    const email = document.getElementById('tenantEmail').value;
-    const phone = document.getElementById('tenantPhone').value;
-    const password = document.getElementById('tenantPassword').value;
-    const confirm = document.getElementById('tenantConfirm').value;
-    const messageEl = document.getElementById('tenantRegMessage');
-    
-    if (!name || !email || !phone || !password || !confirm) {
-        showMessage('⚠️ يرجى ملء جميع الحقول', 'error', messageEl);
-        return;
-    }
-    
-    if (password !== confirm) {
-        showMessage('❌ كلمة المرور غير متطابقة', 'error', messageEl);
-        return;
-    }
-    
-    showMessage('جاري إنشاء الحساب...', 'info', messageEl);
-    
-    setTimeout(() => {
-        // حفظ بيانات المستأجر
-        appState.currentUser = {
-            name: name,
-            email: email,
-            phone: phone,
-            role: 'مستأجر',
-            type: 'tenant'
-        };
-        
-        showMessage('✅ تم إنشاء حساب المستأجر بنجاح!', 'success', messageEl);
-        
-        setTimeout(() => {
-            showTenantDashboard(); // توجيه مباشر لدشبورد المستأجر
-        }, 1500);
-    }, 1000);
-}
-
-function switchTenantTab(tabName) {
-    appState.currentTab = tabName;
-    
-    // إخفاء كل المحتوى
-    document.querySelectorAll('.content-section').forEach(section => {
-        section.classList.remove('active');
-    });
-    
-    // إلغاء تنشيط كل الأزرار
-    document.querySelectorAll('.nav-tab').forEach(tab => {
-        tab.classList.remove('active');
-    });
-    
-    // إظهار المحتوى المطلوب
-    document.getElementById(tabName + 'Content').classList.add('active');
-    
-    // تنشيط الزر المطلوب
-    event.target.classList.add('active');
-}
-
-function showTenantDashboard() {
-    appState.currentView = 'dashboard';
-    appState.currentTab = 'tenant_dashboard';
-    
-    document.getElementById('app').innerHTML = `
-        <div class="app-container">
-            <div class="main-box">
-                <div class="dashboard-header" style="background: linear-gradient(135deg, #27ae60, #229954);">
-                    <h1>مرحباً ${appState.currentUser.name}!
-                    <p>لوحة تحكم المستأجر</p>
-                </div>
-                
-                <div class="nav-tabs">
-                    <button class="nav-tab active" onclick="switchTenantTab('tenant_dashboard')">📊 الرئيسية</button>
-                    <button class="nav-tab" onclick="switchTenantTab('tenant_contract')">📄 العقد</button>
-                    <button class="nav-tab" onclick="switchTenantTab('tenant_payments')">💰 مدفوعاتي</button>
-                    <button class="nav-tab" onclick="switchTenantTab('tenant_maintenance')">🔧 طلبات الصيانة</button>
-                    <button class="nav-tab" onclick="switchTenantTab('tenant_profile')">👤 الملف الشخصي</button>
-                </div>
-                
-                <!-- محتوى دشبورد المستأجر -->
-                <div id="tenant_dashboardContent" class="content-section active">
-                    <div class="stats-grid">
-                        <div class="stat-card" style="border-top-color: #27ae60;">
-                            <div class="stat-number">شقة ٢٠١</div>
-                            <div class="stat-label">العقار الحالي</div>
-                        </div>
-                        <div class="stat-card" style="border-top-color: #3498db;">
-                            <div class="stat-number">٣,٠٠٠ ريال</div>
-                            <div class="stat-label">الإيجار الشهري</div>
-                        </div>
-                        <div class="stat-card" style="border-top-color: #e74c3c;">
-                            <div class="stat-number">٥ أيام</div>
-                            <div class="stat-label">متبقي للدفع</div>
-                        </div>
-                        <div class="stat-card" style="border-top-color: #f39c12;">
-                            <div class="stat-number">١</div>
-                            <div class="stat-label">طلبات صيانة</div>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <h3>آخر النشاطات</h3>
-                        <p>✅ تم دفع إيجار شهر يناير - 3,000 ريال</p>
-                        <p>⏳ طلب صيانة الحمام قيد المعالجة</p>
-                        <p>📅 موعد الدفع القادم: 2024-02-01</p>
-                    </div>
-                    
-                    <div class="card">
-                        <h3>الإشعارات المهمة</h3>
-                        <p>🔔 تذكير: موعد دفع الإيجار بعد 5 أيام</p>
-                        <p>✅ تم معالجة طلب الصيانة الخاص بالمطبخ</p>
-                    </div>
-                </div>
-                
-                <!-- محتوى العقد -->
-                <div id="tenant_contractContent" class="content-section">
-                    <h2>عقد الإيجار</h2>
-                    <div class="card">
-                        <h3>تفاصيل العقد</h3>
-                        <p><strong>رقم العقد:</strong> CON-2024-001</p>
-                        <p><strong>المالك:</strong> أحمد محمد</p>
-                        <p><strong>المستأجر:</strong> ${appState.currentUser.name}</p>
-                        <p><strong>العقار:</strong> شقة ٢٠١ - مجمع الواحة</p>
-                        <p><strong>مدة العقد:</strong> 12 شهر</p>
-                        <p><strong>قيمة الإيجار:</strong> 3,000 ريال/شهر</p>
-                        <p><strong>تاريخ البدء:</strong> 2024-01-01</p>
-                        <p><strong>تاريخ الانتهاء:</strong> 2024-12-31</p>
-                    </div>
-                    
-                    <button class="btn btn-primary">
-                        📄 تحميل نسخة من العقد
-                    </button>
-                    <button class="btn btn-light">
-                        🖨️ طباعة العقد
-                    </button>
-                </div>
-                
-                <!-- محتوى المدفوعات -->
-                <div id="tenant_paymentsContent" class="content-section">
-                    <h2>سجل المدفوعات</h2>
-                    <button class="btn btn-primary" onclick="showPaymentMethod()">💳 دفع الإيجار</button>
-                    
-                    <div class="card">
-                        <h3>تاريخ المدفوعات</h3>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>الشهر</th>
-                                    <th>المبلغ</th>
-                                    <th>تاريخ الدفع</th>
-                                    <th>الحالة</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>يناير 2024</td>
-                                    <td>3,000 ريال</td>
-                                    <td>2024-01-01</td>
-                                    <td><span class="status-badge status-paid">مدفوع</span></td>
-                                </tr>
-                                <tr>
-                                    <td>فبراير 2024</td>
-                                    <td>3,000 ريال</td>
-                                    <td>2024-02-01</td>
-                                    <td><span class="status-badge status-pending">قيد الانتظار</span></td>
-                                </tr>
-                                <tr>
-                                    <td>مارس 2024</td>
-                                    <td>3,000 ريال</td>
-                                    <td>2024-03-01</td>
-                                    <td><span class="status-badge status-pending">مستحق</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                
-                <!-- محتوى الصيانة -->
-                <div id="tenant_maintenanceContent" class="content-section">
-                    <h2>طلبات الصيانة</h2>
-                    <button class="btn btn-primary" onclick="showNewMaintenance()">➕ طلب صيانة جديد</button>
-                    
-                    <div class="card">
-                        <h3>الطلبات الحالية</h3>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>رقم الطلب</th>
-                                    <th>النوع</th>
-                                    <th>الوصف</th>
-                                    <th>الحالة</th>
-                                    <th>التاريخ</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>#001</td>
-                                    <td>سباكة</td>
-                                    <td>تسرب ماء في الحمام</td>
-                                    <td><span class="status-badge status-paid">مكتمل</span></td>
-                                    <td>2024-01-15</td>
-                                </tr>
-                                <tr>
-                                    <td>#002</td>
-                                    <td>كهرباء</td>
-                                    <td>مشكلة في الإضاءة</td>
-                                    <td><span class="status-badge status-pending">قيد المعالجة</span></td>
-                                    <td>2024-01-20</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                
-                <!-- محتوى الملف الشخصي -->
-                <div id="tenant_profileContent" class="content-section">
-                    <h2>الملف الشخصي</h2>
-                    <div class="card">
-                        <h3>معلوماتي</h3>
-                        <p><strong>الاسم:</strong> ${appState.currentUser.name}</p>
-                        <p><strong>البريد الإلكتروني:</strong> ${appState.currentUser.email}</p>
-                        <p><strong>رقم الهاتف:</strong> ${appState.currentUser.phone || '0551234567'}</p>
-                        <p><strong>نوع المستخدم:</strong> مستأجر</p>
-                        <p><strong>تاريخ التسجيل:</strong> 2024-01-01</p>
-                    </div>
-                    
-                    <button class="btn btn-primary">✏️ تعديل الملف الشخصي</button>
-                    <button class="btn btn-light">🔒 تغيير كلمة المرور</button>
-                </div>
-                
-                <div style="text-align: center; margin-top: 30px;">
-                    <button class="btn btn-warning" onclick="logout()">🚪 تسجيل الخروج</button>
-                </div>
-            </div>
-        </div>
-    `;
-}
-
-function showPaymentMethod() {
-    alert('💳 صفحة اختيار طريقة الدفع - جاري التطوير');
-}
-
-function showNewMaintenance() {
-    alert('🔧 صفحة تقديم طلب صيانة جديد - جاري التطوير');
-}
-
-        function showOwnerDashboard() {
-            appState.currentView = 'dashboard';
-            appState.currentTab = 'dashboard';
-            
-            document.getElementById('app').innerHTML = `
-                <div class="app-container">
-                    <div class="main-box">
-                        <div class="dashboard-header">
-                            <h1>مرحباً ${appState.currentUser.name}!
-                            <p>لوحة تحكم ${appState.currentUser.role}</p>
-                        </div>
-                        
-                        <div class="nav-tabs">
-                            <button class="nav-tab active" onclick="switchTab('dashboard')">📊 الرئيسية</button>
-                            <button class="nav-tab" onclick="switchTab('properties')">🏢 العقارات</button>
-                            <button class="nav-tab" onclick="switchTab('tenants')">👥 المستأجرين</button>
-                            <button class="nav-tab" onclick="switchTab('payments')">💰 المدفوعات</button>
-                            <button class="nav-tab" onclick="switchTab('maintenance')">🔧 الصيانة</button>
-                            <button class="nav-tab" onclick="switchTab('reports')">📈 التقارير</button>
-                        </div>
-                        
-                        <!-- محتوى الداشبورد -->
-                        <div id="dashboardContent" class="content-section active">
-                            <div class="stats-grid">
-                                <div class="stat-card">
-                                    <div class="stat-number">${sampleData.stats.properties}</div>
-                                    <div class="stat-label">عقار</div>
-                                </div>
-                                <div class="stat-card">
-                                    <div class="stat-number">${sampleData.stats.tenants}</div>
-                                    <div class="stat-label">مستأجر</div>
-                                </div>
-                                <div class="stat-card">
-                                    <div class="stat-number">${sampleData.stats.payments}</div>
-                                    <div class="stat-label">دفعة</div>
-                                </div>
-                                <div class="stat-card">
-                                    <div class="stat-number">${sampleData.stats.maintenance}</div>
-                                    <div class="stat-label">طلب صيانة</div>
-                                </div>
-                            </div>
-                            
-                            <div class="card">
-                                <h3>آخر النشاطات</h3>
-                                <p>تم دفع إيجار فيلا الرياض - 5,000 ريال</p>
-                                <p>طلب صيانة جديد لشقة جدة</p>
-                            </div>
-                        </div>
-                        
-                        <!-- محتوى العقارات -->
-                        <div id="propertiesContent" class="content-section">
-                            <h2>إدارة العقارات</h2>
-                            <button class="btn btn-primary" onclick="showAddProperty()">➕ إضافة عقار</button>
-                            
-                            <div class="card">
-                                <h3>قائمة العقارات</h3>
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>اسم العقار</th>
-                                            <th>النوع</th>
-                                            <th>الحالة</th>
-                                            <th>الإجراءات</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        ${sampleData.properties.map(property => `
-                                            <tr>
-                                                <td>${property.name}</td>
-                                                <td>${property.type}</td>
-                                                <td>${property.status}</td>
-                                                <td>
-                                                    <button class="btn btn-light" onclick="editProperty(${property.id})">تعديل</button>
-                                                    <button class="btn btn-danger" onclick="deleteProperty(${property.id})">حذف</button>
-                                                </td>
-                                            </tr>
-                                        `).join('')}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        
-                        <!-- محتوى المستأجرين -->
-                        <div id="tenantsContent" class="content-section">
-                            <h2>إدارة المستأجرين</h2>
-                            <button class="btn btn-primary" onclick="showAddTenant()">➕ إضافة مستأجر</button>
-                            
-                            <div class="card">
-                                <h3>قائمة المستأجرين</h3>
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>اسم المستأجر</th>
-                                            <th>العقار</th>
-                                            <th>الهاتف</th>
-                                            <th>الإجراءات</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        ${sampleData.tenants.map(tenant => `
-                                            <tr>
-                                                <td>${tenant.name}</td>
-                                                <td>${tenant.property}</td>
-                                                <td>${tenant.phone}</td>
-                                                <td>
-                                                    <button class="btn btn-light" onclick="editTenant(${tenant.id})">تعديل</button>
-                                                    <button class="btn btn-danger" onclick="deleteTenant(${tenant.id})">حذف</button>
-                                                </td>
-                                            </tr>
-                                        `).join('')}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        
-                        <!-- محتوى المدفوعات -->
-                        <div id="paymentsContent" class="content-section">
-                            <h2>إدارة المدفوعات</h2>
-                            <button class="btn btn-primary" onclick="showAddPayment()">➕ إضافة دفعة</button>
-                            
-                            <div class="card">
-                                <h3>سجل المدفوعات</h3>
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>المستأجر</th>
-                                            <th>المبلغ</th>
-                                            <th>التاريخ</th>
-                                            <th>الحالة</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        ${sampleData.payments.map(payment => `
-                                            <tr>
-                                                <td>${payment.tenant}</td>
-                                                <td>${payment.amount} ريال</td>
-                                                <td>${payment.date}</td>
-                                                <td>
-                                                    <span class="status-badge ${payment.status === 'مدفوع' ? 'status-paid' : 'status-pending'}">
-                                                        ${payment.status}
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                        `).join('')}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        
-                        <!-- محتوى الصيانة -->
-                        <div id="maintenanceContent" class="content-section">
-                            <h2>طلبات الصيانة</h2>
-                            <button class="btn btn-primary" onclick="showAddMaintenance()">➕ طلب صيانة</button>
-                            <div class="card">
-                                <h3>لا توجد طلبات صيانة حالياً</h3>
-                            </div>
-                        </div>
-                        
-                        <!-- محتوى التقارير -->
-                        <div id="reportsContent" class="content-section">
-                            <h2>التقارير والإحصائيات</h2>
-                            <div class="card">
-                                <h3>تقارير الأداء</h3>
-                                <p>جاري تطوير هذه الصفحة...</p>
-                            </div>
-                        </div>
-                        
-                        <div style="text-align: center; margin-top: 30px;">
-                            <button class="btn btn-warning" onclick="logout()">🚪 تسجيل الخروج</button>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function switchTab(tabName) {
-            appState.currentTab = tabName;
-            
-            // إخفاء كل المحتوى
-            document.querySelectorAll('.content-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            // إلغاء تنشيط كل الأزرار
-            document.querySelectorAll('.nav-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // إظهار المحتوى المطلوب
-            document.getElementById(tabName + 'Content').classList.add('active');
-            
-            // تنشيط الزر المطلوب
-            event.target.classList.add('active');
-        }
-
-        function showAddProperty() {
-            alert('📝 صفحة إضافة عقار جديد - جاري التطوير');
-        }
-
-        function showAddTenant() {
-            alert('👥 صفحة إضافة مستأجر جديد - جاري التطوير');
-        }
-
-        function showAddPayment() {
-            alert('💰 صفحة إضافة دفعة جديدة - جاري التطوير');
-        }
-
-        function showAddMaintenance() {
-            alert('🔧 صفحة إضافة طلب صيانة - جاري التطوير');
-        }
-
-        function logout() {
-            appState.currentUser = null;
-            showHome();
-        }
-
-        function showMessage(message, type, container) {
-            if (!container) return;
-            
-            container.innerHTML = `
-                <div class="message ${type}">
-                    ${message}
-                </div>
-            `;
-        }
-
-        // دوال مساعدة
-        function editProperty(id) {
-            alert(`✏️ تعديل العقار رقم ${id} - جاري التطوير`);
-        }
-
-        function deleteProperty(id) {
-            if (confirm('هل أنت متأكد من حذف هذا العقار؟')) {
-                alert(`🗑️ تم حذف العقار رقم ${id}`);
-            }
-        }
-
-        function editTenant(id) {
-            alert(`✏️ تعديل المستأجر رقم ${id} - جاري التطوير`);
-        }
-
-        function deleteTenant(id) {
-            if (confirm('هل أنت متأكد من حذف هذا المستأجر؟')) {
-                alert(`🗑️ تم حذف المستأجر رقم ${id}`);
-            }
-        }
 
         // بدء التطبيق
-        console.log('🚀 بدء تشغيل التطبيق...');
-        showHome();
+        document.addEventListener('DOMContentLoaded', function() {
+            app.init();
+        });
+
+        // جعل app و NotificationSystem متاحين globally
+        window.app = app;
+        window.NotificationSystem = NotificationSystem;
+        console.log('✅ تم تحميل التطبيق بنجاح');
     </script>
 </body>
 </html>
